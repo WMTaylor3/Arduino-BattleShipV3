@@ -19,7 +19,14 @@
 struct position
 {
 	uint8_t x;
-	char y;
+	uint8_t y;
+};
+
+//Used to transmit the start and end positions of the ships during game set up.
+struct shipLocation
+{
+	position startPosition;
+	position endPosition;
 };
 
 //Used to initialize the LED grids.
@@ -29,12 +36,8 @@ struct gridConnections
 	uint8_t ledConnections[10][3];	//Identifies where each vLEDs anode is controlled from.
 };
 
-//Used to transmit the start and end positions of the ships during game set up.
-struct shipLocation
-{
-	position shipPosition[5][2];	//Ship start and end position.
-};
-
+typedef enum { Left, Center, Right } buttonPress;
+typedef enum { StartX, StartY, End } positionType;
 typedef enum { Carrier, Battleship, Cruiser, Submarine, Destroyer } shipType;
 typedef enum { Hit, HitAndSunk, Miss, Occupied, Empty } gridReferenceState;
 

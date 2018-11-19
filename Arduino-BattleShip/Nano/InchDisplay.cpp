@@ -3,7 +3,7 @@
 *
 *	Source file for representation of the 0.96" OLED Display connected.
 *
-*	By William Taylor https ://github.com/WMTaylor3
+*	By William Taylor https://github.com/WMTaylor3
 */
 #include <gfxfont.h>
 #include <Adafruit_SPITFT.h>
@@ -39,20 +39,20 @@ void InchDisplay::refreshDisplay()
 	display.display();
 }
 
-void InchDisplay::drawStartAndEnd(position startPosition, position endPosition, uint8_t selected)
+void InchDisplay::drawStartAndEnd(position startPosition, position endPosition, positionType coordinate)
 {
 	if (startPosition.y == 10 && endPosition.y == 10)
 	{
-		if (selected == 0)
+		if (coordinate == StartX)
 		{
 			display.fillRect(9, 38, 12, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(10, 39);
-		display.write(startPosition.x);
+		display.write(startPosition.x + 64);
 		display.setTextColor(1);
 
-		if (selected == 1)
+		if (coordinate == StartY)
 		{
 			display.fillRect(21, 38, 24, 16, 1);
 			display.setTextColor(0);
@@ -64,35 +64,28 @@ void InchDisplay::drawStartAndEnd(position startPosition, position endPosition, 
 		display.setCursor(40, 39);
 		display.print(" TO ");
 
-		if (selected == 2)
+		if (coordinate == End)
 		{
-			display.fillRect(81, 38, 12, 16, 1);
+			display.fillRect(81, 38, 36, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(82, 39);
-		display.write(endPosition.x);
-		display.setTextColor(1);
-
-		if (selected == 3)
-		{
-			display.fillRect(93, 38, 24, 16, 1);
-			display.setTextColor(0);
-		}
+		display.write(endPosition.x + 64);
 		display.setCursor(94, 39);
 		display.print(endPosition.y + 0);
 	}
 	else if (startPosition.y >= 10 && endPosition.y < 10)
 	{
-		if (selected == 0)
+		if (coordinate == StartX)
 		{
 			display.fillRect(15, 38, 12, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(16, 39);
-		display.write(startPosition.x);
+		display.write(startPosition.x + 64);
 		display.setTextColor(1);
 
-		if (selected == 1)
+		if (coordinate == StartY)
 		{
 			display.fillRect(27, 38, 24, 16, 1);
 			display.setTextColor(0);
@@ -104,35 +97,28 @@ void InchDisplay::drawStartAndEnd(position startPosition, position endPosition, 
 		display.setCursor(46, 39);
 		display.print(" TO ");
 
-		if (selected == 2)
+		if (coordinate == End)
 		{
-			display.fillRect(87, 38, 12, 16, 1);
+			display.fillRect(87, 38, 24, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(88, 39);
-		display.write(endPosition.x);
-		display.setTextColor(1);
-
-		if (selected == 3)
-		{
-			display.fillRect(99, 38, 12, 16, 1);
-			display.setTextColor(0);
-		}
+		display.write(endPosition.x + 64);
 		display.setCursor(100, 39);
 		display.print(endPosition.y + 0);
 	}
 	else if (startPosition.y < 10 && endPosition.y >= 10)
 	{
-		if (selected == 0)
+		if (coordinate == StartX)
 		{
 			display.fillRect(15, 38, 12, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(16, 39);
-		display.write(startPosition.x);
+		display.write(startPosition.x + 64);
 		display.setTextColor(1);
 
-		if (selected == 1)
+		if (coordinate == StartY)
 		{
 			display.fillRect(27, 38, 12, 16, 1);
 			display.setTextColor(0);
@@ -144,35 +130,28 @@ void InchDisplay::drawStartAndEnd(position startPosition, position endPosition, 
 		display.setCursor(34, 39);
 		display.print(" TO ");
 
-		if (selected == 2)
+		if (coordinate == End)
 		{
-			display.fillRect(75, 38, 12, 16, 1);
+			display.fillRect(75, 38, 36, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(76, 39);
-		display.write(endPosition.x);
-		display.setTextColor(1);
-
-		if (selected == 3)
-		{
-			display.fillRect(87, 38, 24, 16, 1);
-			display.setTextColor(0);
-		}
+		display.write(endPosition.x + 64);
 		display.setCursor(88, 39);
 		display.print(endPosition.y + 0);
 	}
 	else
 	{
-		if (selected == 0)
+		if (coordinate == StartX)
 		{
 			display.fillRect(21, 38, 12, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(22, 39);
-		display.write(startPosition.x);
+		display.write(startPosition.x + 64);
 		display.setTextColor(1);
 
-		if (selected == 1)
+		if (coordinate == StartY)
 		{
 			display.fillRect(33, 38, 12, 16, 1);
 			display.setTextColor(0);
@@ -184,20 +163,13 @@ void InchDisplay::drawStartAndEnd(position startPosition, position endPosition, 
 		display.setCursor(40, 39);
 		display.print(" TO ");
 
-		if (selected == 2)
+		if (coordinate == End)
 		{
-			display.fillRect(81, 38, 12, 16, 1);
+			display.fillRect(81, 38, 24, 16, 1);
 			display.setTextColor(0);
 		}
 		display.setCursor(82, 39);
-		display.write(endPosition.x);
-		display.setTextColor(1);
-
-		if (selected == 3)
-		{
-			display.fillRect(93, 38, 12, 16, 1);
-			display.setTextColor(0);
-		}
+		display.write(endPosition.x + 64);
 		display.setCursor(94, 39);
 		display.print(endPosition.y + 0);
 	}
@@ -247,52 +219,52 @@ void InchDisplay::drawPlaceYourShips()
 	display.display();
 }
 
-void InchDisplay::drawPlaceCarrier(position startPosition, position endPosition, uint8_t selected)
+void InchDisplay::drawPlaceCarrier(position startPosition, position endPosition, positionType coordinate)
 {
 	prepareForDraw(2);
 	display.setCursor(22, 14);
 	display.print("CARRIER");
-	drawStartAndEnd(startPosition, endPosition, selected);
+	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
 
-void InchDisplay::drawPlaceBattleShip(position startPosition, position endPosition, uint8_t selected)
+void InchDisplay::drawPlaceBattleShip(position startPosition, position endPosition, positionType coordinate)
 {
 	prepareForDraw(2);
 	display.setCursor(4, 14);
 	display.print("BATTLESHIP");
-	drawStartAndEnd(startPosition, endPosition, selected);
+	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
 
-void InchDisplay::drawPlaceCruiser(position startPosition, position endPosition, uint8_t selected)
+void InchDisplay::drawPlaceCruiser(position startPosition, position endPosition, positionType coordinate)
 {
 	prepareForDraw(2);
 	display.setCursor(22, 14);
 	display.print("CRUISER");
-	drawStartAndEnd(startPosition, endPosition, selected);
+	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
 
-void InchDisplay::drawPlaceSubmarine(position startPosition, position endPosition, uint8_t selected)
+void InchDisplay::drawPlaceSubmarine(position startPosition, position endPosition, positionType coordinate)
 {
 	prepareForDraw(2);
 	display.setCursor(10, 14);
 	display.print("SUBMARINE");
-	drawStartAndEnd(startPosition, endPosition, selected);
+	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
 
-void InchDisplay::drawPlaceDestroyer(position startPosition, position endPosition, uint8_t selected)
+void InchDisplay::drawPlaceDestroyer(position startPosition, position endPosition, positionType coordinate)
 {
 	prepareForDraw(2);
 	display.setCursor(10, 14);
 	display.print("DESTROYER");
-	drawStartAndEnd(startPosition, endPosition, selected);
+	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
 
-void InchDisplay::drawEnterTarget(position targetPosition, uint8_t selected)
+void InchDisplay::drawEnterTarget(position targetPosition, positionType coordinate)
 {
 	prepareForDraw(2);
 	display.setCursor(28, 14);
@@ -300,7 +272,7 @@ void InchDisplay::drawEnterTarget(position targetPosition, uint8_t selected)
 
 	if (targetPosition.y >= 10)
 	{
-		if (selected == 0)
+		if (coordinate == StartX)
 		{
 			display.fillRect(45, 38, 12, 16, 1);
 			display.setTextColor(0);
@@ -309,7 +281,7 @@ void InchDisplay::drawEnterTarget(position targetPosition, uint8_t selected)
 		display.write(targetPosition.x);
 		display.setTextColor(1);
 		
-		if (selected == 1)
+		if (coordinate == StartY)
 		{
 			display.fillRect(57, 38, 24, 16, 1);
 			display.setTextColor(0);
@@ -319,7 +291,7 @@ void InchDisplay::drawEnterTarget(position targetPosition, uint8_t selected)
 	}
 	else
 	{
-		if (selected == 0)
+		if (coordinate == StartX)
 		{
 			display.fillRect(51, 38, 12, 16, 1);
 			display.setTextColor(0);
@@ -328,7 +300,7 @@ void InchDisplay::drawEnterTarget(position targetPosition, uint8_t selected)
 		display.write(targetPosition.x);
 		display.setTextColor(1);
 
-		if (selected == 1)
+		if (coordinate == StartY)
 		{
 			display.fillRect(63, 38, 12, 16, 1);
 			display.setTextColor(0);

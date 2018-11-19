@@ -93,7 +93,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\Arduino-BattleShip\Nano;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit_SSD1306;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\src;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\BattleShipCommonTypes;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src\utility;D:\Program Files (x86)\Arduino\libraries;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries;D:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;D:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs;D:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;D:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;D:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;D:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;D:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\Arduino-BattleShip\Nano;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\BattleShipCommonTypes;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit_SSD1306;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\src;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\src\utility;D:\Program Files (x86)\Arduino\libraries;D:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries;D:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;D:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs;D:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include;D:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\avr;D:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.8.1\include;D:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.2\include;D:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\4.9.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>\\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\Arduino-BattleShip\Nano\__vm\.Nano.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;F_CPU=16000000L;ARDUINO=10807;ARDUINO_AVR_NANO;ARDUINO_ARCH_AVR;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -117,10 +117,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InchDisplay.h" />
+    <ClInclude Include="Ship.h" />
     <ClInclude Include="__vm\.Nano.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InchDisplay.cpp" />
+    <ClCompile Include="Ship.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
