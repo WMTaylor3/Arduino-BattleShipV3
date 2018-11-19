@@ -19,10 +19,10 @@ InchDisplay display;
 void setup()
 {
 	display.initializeDisplay();
-	position test;
-	test.x = 'B';
-	test.y = 0;
-	display.drawEnterTarget(test);
+	position a;
+	a.x = 'H';
+	a.y = 88;
+	display.drawEnterTarget(a, 1);
 }
 
 // the loop function runs over and over again until power down or reset

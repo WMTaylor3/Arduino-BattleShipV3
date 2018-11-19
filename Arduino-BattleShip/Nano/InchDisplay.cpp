@@ -39,6 +39,170 @@ void InchDisplay::refreshDisplay()
 	display.display();
 }
 
+void InchDisplay::drawStartAndEnd(position startPosition, position endPosition, uint8_t selected)
+{
+	if (startPosition.y == 10 && endPosition.y == 10)
+	{
+		if (selected == 0)
+		{
+			display.fillRect(9, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(10, 39);
+		display.write(startPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 1)
+		{
+			display.fillRect(21, 38, 24, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(22, 39);
+		display.print(startPosition.y + 0);
+		display.setTextColor(1);
+
+		display.setCursor(40, 39);
+		display.print(" TO ");
+
+		if (selected == 2)
+		{
+			display.fillRect(81, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(82, 39);
+		display.write(endPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 3)
+		{
+			display.fillRect(93, 38, 24, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(94, 39);
+		display.print(endPosition.y + 0);
+	}
+	else if (startPosition.y >= 10 && endPosition.y < 10)
+	{
+		if (selected == 0)
+		{
+			display.fillRect(15, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(16, 39);
+		display.write(startPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 1)
+		{
+			display.fillRect(27, 38, 24, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(28, 39);
+		display.print(startPosition.y + 0);
+		display.setTextColor(1);
+
+		display.setCursor(46, 39);
+		display.print(" TO ");
+
+		if (selected == 2)
+		{
+			display.fillRect(87, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(88, 39);
+		display.write(endPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 3)
+		{
+			display.fillRect(99, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(100, 39);
+		display.print(endPosition.y + 0);
+	}
+	else if (startPosition.y < 10 && endPosition.y >= 10)
+	{
+		if (selected == 0)
+		{
+			display.fillRect(15, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(16, 39);
+		display.write(startPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 1)
+		{
+			display.fillRect(27, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(28, 39);
+		display.print(startPosition.y + 0);
+		display.setTextColor(1);
+
+		display.setCursor(34, 39);
+		display.print(" TO ");
+
+		if (selected == 2)
+		{
+			display.fillRect(75, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(76, 39);
+		display.write(endPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 3)
+		{
+			display.fillRect(87, 38, 24, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(88, 39);
+		display.print(endPosition.y + 0);
+	}
+	else
+	{
+		if (selected == 0)
+		{
+			display.fillRect(21, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(22, 39);
+		display.write(startPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 1)
+		{
+			display.fillRect(33, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(34, 39);
+		display.print(startPosition.y + 0);
+		display.setTextColor(1);
+
+		display.setCursor(40, 39);
+		display.print(" TO ");
+
+		if (selected == 2)
+		{
+			display.fillRect(81, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(82, 39);
+		display.write(endPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 3)
+		{
+			display.fillRect(93, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(94, 39);
+		display.print(endPosition.y + 0);
+	}
+}
+
 void InchDisplay::initializeDisplay()
 {
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -83,149 +247,177 @@ void InchDisplay::drawPlaceYourShips()
 	display.display();
 }
 
-void InchDisplay::drawPlaceCarrier(position startPosition, position endPosition)
+void InchDisplay::drawPlaceCarrier(position startPosition, position endPosition, uint8_t selected)
 {
 	prepareForDraw(2);
 	display.setCursor(22, 14);
 	display.print("CARRIER");
-	display.setCursor(22, 39);
-	display.print(startPosition.y);
-	display.setCursor(34, 39);
-	display.print(startPosition.x);
-	display.setCursor(40, 39);
-	display.print(" TO ");
-	display.setCursor(82, 39);
-	display.print(endPosition.y);
-	display.setCursor(94, 39);
-	display.print(endPosition.x);
+	drawStartAndEnd(startPosition, endPosition, selected);
 	display.display();
 }
 
-void InchDisplay::drawPlaceBattleShip(position startPosition, position endPosition)
+void InchDisplay::drawPlaceBattleShip(position startPosition, position endPosition, uint8_t selected)
 {
 	prepareForDraw(2);
 	display.setCursor(4, 14);
 	display.print("BATTLESHIP");
-	display.setCursor(22, 39);
-	display.print(startPosition.y);
-	display.setCursor(34, 39);
-	display.print(startPosition.x);
-	display.setCursor(40, 39);
-	display.print(" TO ");
-	display.setCursor(82, 39);
-	display.print(endPosition.y);
-	display.setCursor(94, 39);
-	display.print(endPosition.x);
+	drawStartAndEnd(startPosition, endPosition, selected);
 	display.display();
 }
 
-void InchDisplay::drawPlaceCruiser(position startPosition, position endPosition)
+void InchDisplay::drawPlaceCruiser(position startPosition, position endPosition, uint8_t selected)
 {
 	prepareForDraw(2);
 	display.setCursor(22, 14);
 	display.print("CRUISER");
-	display.setCursor(22, 39);
-	display.print(startPosition.y);
-	display.setCursor(34, 39);
-	display.print(startPosition.x);
-	display.setCursor(40, 39);
-	display.print(" TO ");
-	display.setCursor(82, 39);
-	display.print(endPosition.y);
-	display.setCursor(94, 39);
-	display.print(endPosition.x);
+	drawStartAndEnd(startPosition, endPosition, selected);
 	display.display();
 }
 
-void InchDisplay::drawPlaceSubmarine(position startPosition, position endPosition)
+void InchDisplay::drawPlaceSubmarine(position startPosition, position endPosition, uint8_t selected)
 {
 	prepareForDraw(2);
 	display.setCursor(10, 14);
 	display.print("SUBMARINE");
-	display.setCursor(22, 39);
-	display.print(startPosition.y);
-	display.setCursor(34, 39);
-	display.print(startPosition.x);
-	display.setCursor(40, 39);
-	display.print(" TO ");
-	display.setCursor(82, 39);
-	display.print(endPosition.y);
-	display.setCursor(94, 39);
-	display.print(endPosition.x);
+	drawStartAndEnd(startPosition, endPosition, selected);
 	display.display();
 }
 
-void InchDisplay::drawPlaceDestroyer(position startPosition, position endPosition)
+void InchDisplay::drawPlaceDestroyer(position startPosition, position endPosition, uint8_t selected)
 {
 	prepareForDraw(2);
 	display.setCursor(10, 14);
 	display.print("DESTROYER");
-	display.setCursor(22, 39);
-	display.print(startPosition.y);
-	display.setCursor(34, 39);
-	display.print(startPosition.x);
-	display.setCursor(40, 39);
-	display.print(" TO ");
-	display.setCursor(82, 39);
-	display.print(endPosition.y);
-	display.setCursor(94, 39);
-	display.print(endPosition.x);
+	drawStartAndEnd(startPosition, endPosition, selected);
 	display.display();
 }
 
-void InchDisplay::drawEnterTarget(position targetPosition)
+void InchDisplay::drawEnterTarget(position targetPosition, uint8_t selected)
 {
 	prepareForDraw(2);
-	uint8_t offset = 0;
-	if (targetPosition.y == 10)
-	{
-		offset = 6;
-	}
 	display.setCursor(28, 14);
 	display.print("TARGET");
-	display.setCursor(52 - offset, 39);
-	display.write(targetPosition.x);
-	display.setCursor(64 - offset, 39);
-	display.print(targetPosition.y + 0);
+
+	if (targetPosition.y >= 10)
+	{
+		if (selected == 0)
+		{
+			display.fillRect(45, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(46, 39);
+		display.write(targetPosition.x);
+		display.setTextColor(1);
+		
+		if (selected == 1)
+		{
+			display.fillRect(57, 38, 24, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(58, 39);
+		display.print(targetPosition.y + 0);
+	}
+	else
+	{
+		if (selected == 0)
+		{
+			display.fillRect(51, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(52, 39);
+		display.write(targetPosition.x);
+		display.setTextColor(1);
+
+		if (selected == 1)
+		{
+			display.fillRect(63, 38, 12, 16, 1);
+			display.setTextColor(0);
+		}
+		display.setCursor(64, 39);
+		display.print(targetPosition.y + 0);
+	}
+
+
 	display.display();
 }
 
 void InchDisplay::drawYourTurn()
 {
-
+	prepareForDraw(2);
+	display.setCursor(41, 14);
+	display.print("YOUR");
+	display.setCursor(41, 39);
+	display.print("TURN");
+	display.display();
 }
 
 void InchDisplay::drawTheirTurn()
 {
-
+	prepareForDraw(2);
+	display.setCursor(35, 14);
+	display.print("THEIR");
+	display.setCursor(41, 39);
+	display.print("TURN");
+	display.display();
 }
 
 void InchDisplay::drawFire()
 {
-
+	for (uint8_t i = 0; i < 5; i++)
+	{
+		prepareForDraw(4);
+		display.setCursor(8, 18);
+		display.print("FIRE!");
+		display.display();
+		delay(200);
+		display.clearDisplay();
+		display.display();
+		delay(200);
+	}
 }
 
 void InchDisplay::drawHit()
 {
-
+	prepareForDraw(4);
+	display.setCursor(20, 18);
+	display.print("HIT!");
+	display.display();
 }
 
 void InchDisplay::drawHitAndSunk()
 {
-
+	prepareForDraw(2);
+	display.setCursor(46, 14);
+	display.print("HIT");
+	display.setCursor(16, 39);
+	display.print("AND SUNK");
+	display.display();
 }
 
 void InchDisplay::drawMiss()
 {
-
+	prepareForDraw(4);
+	display.setCursor(18, 18);
+	display.print("MISS");
+	display.display();
 }
 
 void InchDisplay::drawYouWin()
 {
-
+	prepareForDraw(3);
+	display.setCursor(38, 6);
+	display.print("YOU");
+	display.setCursor(38, 39);
+	display.print("WIN");
+	display.display();
 }
 
 void InchDisplay::drawYouLose()
 {
-
+	prepareForDraw(3);
+	display.setCursor(38, 6);
+	display.print("YOU");
+	display.setCursor(28, 39);
+	display.print("LOSE");
+	display.display();
 }
