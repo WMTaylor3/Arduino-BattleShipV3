@@ -20,33 +20,35 @@
 
 class InchDisplay
 {
-private:
-	Adafruit_SSD1306 display;
-	void prepareForDraw(uint8_t size);
-	void clearDisplay();
-	void refreshDisplay();
-	void drawStartAndEnd(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
-public:
-	InchDisplay();
-	~InchDisplay();
-	void initializeDisplay();
-	void drawBattleShipLogo();
-	void drawConnectionScreen();
-	void drawPlaceYourShips();
-	void drawPlaceCarrier(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
-	void drawPlaceBattleShip(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
-	void drawPlaceCruiser(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
-	void drawPlaceSubmarine(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
-	void drawPlaceDestroyer(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
-	void drawEnterTarget(singleLocation startPosition, positionType coordinate);
-	void drawYourTurn();
-	void drawTheirTurn();
-	void drawFire();
-	void drawHit();
-	void drawHitAndSunk();
-	void drawMiss();
-	void drawYouWin();
-	void drawYouLose();
+	private:
+		Adafruit_SSD1306 display;
+		InchDisplay();
+		static InchDisplay* instance;
+		void prepareForDraw(uint8_t size);
+		void clearDisplay();
+		void refreshDisplay();
+		void drawStartAndEnd(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+	public:
+		~InchDisplay();
+		static InchDisplay* getInstance();
+		void initializeDisplay();
+		void drawBattleShipLogo();
+		void drawConnectionScreen();
+		void drawPlaceYourShips();
+		void drawPlaceCarrier(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+		void drawPlaceBattleShip(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+		void drawPlaceCruiser(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+		void drawPlaceSubmarine(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+		void drawPlaceDestroyer(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+		void drawEnterTarget(singleLocation startPosition, positionType coordinate);
+		void drawYourTurn();
+		void drawTheirTurn();
+		void drawFire();
+		void drawHit();
+		void drawHitAndSunk();
+		void drawMiss();
+		void drawYouWin();
+		void drawYouLose();
 };
 
 #endif

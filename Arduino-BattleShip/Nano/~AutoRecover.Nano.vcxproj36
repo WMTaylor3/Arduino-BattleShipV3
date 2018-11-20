@@ -116,11 +116,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameLogic.h" />
     <ClInclude Include="InchDisplay.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="__vm\.Nano.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="InchDisplay.cpp" />
     <ClCompile Include="Ship.cpp" />
   </ItemGroup>

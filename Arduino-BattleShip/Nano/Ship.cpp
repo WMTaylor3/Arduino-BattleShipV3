@@ -6,6 +6,8 @@
 *	By William Taylor https://github.com/WMTaylor3
 */
 
+#include <MemoryFree.h>
+
 #include <BattleShipCommonTypes.h>
 
 #include "Ship.h"
@@ -13,6 +15,9 @@
 //Constructor. Does not include ship locations, these are handled later after the user has performed input.
 Ship::Ship(shipType typeOfShip)
 {
+	Serial.print("Ship.cpp: Beginning of Ship Constructor. FreeMemory = ");
+	Serial.println(freeMemory());
+	delay(300);
 	name = typeOfShip;	//Set ship type and therefore its name.
 
 	switch (typeOfShip)	//Determine the length and therefore the maximum HP of the ship based on its type.

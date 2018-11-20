@@ -3,7 +3,7 @@
 *
 *	Source file for any user defined types or enums used within the project.
 *
-*	By William Taylor https://github.com/WMTaylor3/BattleShip
+*	By William Taylor https://github.com/WMTaylor3
 */
 
 #ifndef _USERDEFINEDTYPES_h

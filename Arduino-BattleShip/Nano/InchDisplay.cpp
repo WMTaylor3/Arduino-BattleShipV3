@@ -11,15 +11,27 @@
 #include <Adafruit_GFX.h>
 
 #include "InchDisplay.h"
+InchDisplay* InchDisplay::instance = 0;
 
 InchDisplay::InchDisplay() : display(-1)
 {
-
+	//Empty
 }
 
 InchDisplay::~InchDisplay()
 {
+	free(instance);
+}
 
+//In accordance to singleton pattern this method is used instead of a public constructor to ensure only one instance exists.
+InchDisplay* InchDisplay::getInstance()
+{
+	if (instance == 0)
+	{
+		instance = new InchDisplay();
+	}
+
+	return instance;
 }
 
 void InchDisplay::prepareForDraw(uint8_t size)

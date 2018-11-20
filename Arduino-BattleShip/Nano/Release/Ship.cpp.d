@@ -1,5 +1,6 @@
-C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Release\Ship.cpp.o: \
- C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Release\Ship.cpp \
+C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\Ship.cpp.o: \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\Ship.cpp \
+ \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\MemoryFree-master/MemoryFree.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\BattleShipCommonTypes/BattleShipCommonTypes.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/arduino.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/binary.h \
@@ -11,6 +12,5 @@ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Rele
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Printable.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
- D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs/pins_arduino.h \
- d:\program\ files\ (x86)\arduino\hardware\arduino\avr\variants\standard\pins_arduino.h \
- C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Release\Ship.h
+ D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\mega/pins_arduino.h \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\Ship.h

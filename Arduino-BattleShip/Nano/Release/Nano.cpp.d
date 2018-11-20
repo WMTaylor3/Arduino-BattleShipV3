@@ -1,5 +1,5 @@
-C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Release\Nano.cpp.o: \
- C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Release\Nano.cpp \
+C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\Nano.cpp.o: \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\Nano.cpp \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/arduino.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/binary.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/WCharacter.h \
@@ -10,19 +10,22 @@ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Rele
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Printable.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/USBAPI.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
- D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\eightanaloginputs/pins_arduino.h \
- d:\program\ files\ (x86)\arduino\hardware\arduino\avr\variants\standard\pins_arduino.h \
- C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Release\Ship.h \
+ D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\mega/pins_arduino.h \
+ \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\MemoryFree-master/MemoryFree.h \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\ButtonInterface.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\BattleShipCommonTypes/BattleShipCommonTypes.h \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\InchDisplay.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit_SSD1306/Adafruit_SSD1306.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\libraries\SPI\src/SPI.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/Adafruit_GFX.h \
  D:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Print.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/gfxfont.h \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\LowerGrid.h \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\Ship.h \
+ C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\mega_atmega2560\Release\GameLogic.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/gfxfont.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/Adafruit_SPITFT_Macros.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/Adafruit_SPITFT.h \
  \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/Adafruit_GFX.h \
- \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/Adafruit_SPITFT_Macros.h \
- C:\Users\William\ Taylor\AppData\Local\Temp\VMBuilds\Nano\nano_atmega328old\Release\InchDisplay.h
+ \\WMTStorage\NetServer\Projects\Arduino\Arduino-BattleShipV3\libraries\Adafruit-GFX/Adafruit_SPITFT_Macros.h
