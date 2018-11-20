@@ -16,7 +16,7 @@
 #endif
 
 //Represents a single position on one of the gameboards grids.
-struct position
+struct singleLocation
 {
 	uint8_t x;
 	uint8_t y;
@@ -25,8 +25,8 @@ struct position
 //Used to transmit the start and end positions of the ships during game set up.
 struct shipLocation
 {
-	position startPosition;
-	position endPosition;
+	singleLocation startPosition;
+	singleLocation endPosition;
 };
 
 //Used to initialize the LED grids.
@@ -36,8 +36,8 @@ struct gridConnections
 	uint8_t ledConnections[10][3];	//Identifies where each vLEDs anode is controlled from.
 };
 
-typedef enum { Left, Center, Right } buttonPress;
-typedef enum { StartX, StartY, End } positionType;
+typedef enum { Left, CenterPushed, Right, CenterHeld, NoButton } buttonPress;
+typedef enum { X, Y } positionType;
 typedef enum { Carrier, Battleship, Cruiser, Submarine, Destroyer } shipType;
 typedef enum { Hit, HitAndSunk, Miss, Occupied, Empty } gridReferenceState;
 

@@ -28,6 +28,8 @@ void setup()
 	pinMode(buttonCenter, INPUT);
 	pinMode(buttonRight, INPUT);
 
+	Serial.begin(9600);
+
 	display.initializeDisplay();
 	//display.drawBattleShipLogo();
 	layoutShips();
@@ -44,101 +46,114 @@ void layoutShips()
 	//display.drawPlaceYourShips();
 	
 	//delay(1500);
-	shipLocation location = placeShip(Carrier);
-	
+	Ship carrier(Carrier);
+	setShipSingleCoordinate(Carrier, X);
+	setShipSingleCoordinate(Carrier, Y);
 }
 
-shipLocation placeShip(shipType ship)
+void setShipSingleCoordinate(Ship ship, positionType coordinate)
 {
-	shipLocation location;
-	location.startPosition.x = 1;
-	location.startPosition.y = 1;
+	buttonPress previousState = NoButton;
+	buttonPress selectedButton;
 
-	switch (ship)
+	while (true) //Loop until the user presses the center button.
 	{
-	case(Carrier):
-		location.endPosition.x = 5;
-		location.endPosition.y = 1;
-		location.startPosition.x = getShipSingleStartCoordinate(location, Carrier, StartX);
-		location.startPosition.x = getShipSingleStartCoordinate(location, Carrier, StartY);
-		break;
-	}
-}
-
-char getShipSingleStartCoordinate(shipLocation location, shipType ship, positionType coordinate)
-{
-	uint8_t value = location.startPosition.x;
-	while (true) //Loop until the user presses the center button, returning the value to the caller.
-	{
-		if (coordinate == StartX)
-		{
-			location.startPosition.x = value;
-		}
-		else if (coordinate == StartY)
-		{
-			location.startPosition.y = value;
-		}
-
-		switch (ship)
+		switch (ship.getShipType())
 		{
 		case(Carrier):
-			display.drawPlaceCarrier(location.startPosition, location.endPosition, coordinate);
+			display.drawPlaceCarrier(ship.getShipPosition().startPosition, ship.getShipPosition().endPosition, coordinate);
 			break;
 		case(Battleship):
-			display.drawPlaceBattleShip(location.startPosition, location.endPosition, coordinate);
+			display.drawPlaceBattleShip(ship.getShipPosition().startPosition, ship.getShipPosition().endPosition, coordinate);
 			break;
 		case(Cruiser):
-			display.drawPlaceCruiser(location.startPosition, location.endPosition, coordinate);
+			display.drawPlaceCruiser(ship.getShipPosition().startPosition, ship.getShipPosition().endPosition, coordinate);
 			break;
 		case(Submarine):
-			display.drawPlaceSubmarine(location.startPosition, location.endPosition, coordinate);
+			display.drawPlaceSubmarine(ship.getShipPosition().startPosition, ship.getShipPosition().endPosition, coordinate);
 			break;
 		case(Destroyer):
-			display.drawPlaceDestroyer(location.startPosition, location.endPosition, coordinate);
+			display.drawPlaceDestroyer(ship.getShipPosition().startPosition, ship.getShipPosition().endPosition, coordinate);
 			break;
 		}
 
-		buttonPress selection = getButtonPress();
-		if (selection == Center)
+		selectedButton = getButtonPress(previousState);
+
+		if (selectedButton == CenterPushed)
 		{
-			return value;
+			ship.attemptRotation();
 		}
-		else if ((selection == Left) && (value + 1 <= 10))
+		else if (selectedButton == Left)
 		{
-			value++;
+			if (coordinate == X)
+			{
+				ship.incrementXPosition();
+			}
+			else if(coordinate == Y)
+			{
+				ship.incrementYPosition();
+			}
 		}
-		else if ((selection == Right) && (value - 1 >= 1))
+		else if (selectedButton == Right)
 		{
-			value--;
+			if (coordinate == X)
+			{
+				ship.decrementXPosition();
+			}
+			else if (coordinate == Y)
+			{
+				ship.decrementYPosition();
+			}
+		}
+		else if (selectedButton == CenterHeld)
+		{
+			return;
 		}
 		else
 		{
 			//Do nothing.
 		}
+
+		previousState = selectedButton;
 	}
 }
 
-buttonPress getButtonPress()
+buttonPress getButtonPress(buttonPress previousState)
 {
-	while (true) //Wait for user input. Loop until one of the buttons is brought high.
+	//No button selected
+	if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == LOW))
 	{
-		//Leftmost button
-		if ((digitalRead(buttonLeft) == HIGH) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == LOW))
+		return NoButton;
+	}
+	//Left button
+	if ((digitalRead(buttonLeft) == HIGH) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == LOW) && (previousState == NoButton))
+	{
+		while (digitalRead(buttonLeft) == HIGH) { delay(10); }
+		Serial.println("Left");
+		return Left;
+	}
+	//Center button
+	if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == HIGH) && (digitalRead(buttonRight) == LOW) && (previousState == NoButton))
+	{
+		unsigned long startTime = millis();
+		while (digitalRead(buttonCenter) == HIGH) { delay(10); }
+		unsigned long endTime = millis();
+		if (endTime - startTime >= 1000)
 		{
-			delay(150);
-			return Left;
+			Serial.println("Held");
+			return CenterHeld;
 		}
-		//Centermost button
-		if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == HIGH) && (digitalRead(buttonRight) == LOW))
+		else
 		{
-			delay(150);
-			return Center;
+			Serial.println("Pushed");
+			return CenterPushed;
 		}
-		//Rightmost button
-		if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == HIGH))
-		{
-			delay(150);
-			return Right;
-		}
+	}
+	//Right button
+	if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == HIGH) && (previousState == NoButton))
+	{
+		while (digitalRead(buttonRight) == HIGH) { delay(10); }
+		Serial.println("Right");
+		return Right;
 	}
 }

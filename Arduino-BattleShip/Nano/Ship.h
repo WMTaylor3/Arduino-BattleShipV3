@@ -23,15 +23,20 @@ private:
 	shipType name;
 	uint8_t maxSections;	//Number of sections on the ship 5, 4, 3 or 2. Essentially the ships Hit Points (HP)
 	uint8_t remainingSections;	//Remaining sections on the ship not yet hit. Essentially the "Remaining HP"
-	position startPosition;
-	position endPosition;
+	shipLocation position;
 public:
 	Ship(shipType type);
 	~Ship();
-	void initializePosition(position startPosition, position endPosition);
+	shipType getShipType();
+	shipLocation getShipPosition();
 	uint8_t getShipLength();
-	position returnShipGridReference(uint8_t sectionNumber);
-	bool isShipLocatedAtPosition(position strikePosition);
+	void incrementXPosition();
+	void decrementXPosition();
+	void incrementYPosition();
+	void decrementYPosition();
+	void attemptRotation();
+	singleLocation returnShipGridReference(uint8_t sectionNumber);
+	bool isShipLocatedAtPosition(singleLocation strikePosition);
 	bool isShipSunk();
 };
 

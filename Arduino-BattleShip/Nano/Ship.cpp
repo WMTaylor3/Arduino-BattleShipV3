@@ -35,6 +35,11 @@ Ship::Ship(shipType typeOfShip)
 	}
 
 	remainingSections = maxSections;	//Start Ship at full HP.
+
+	position.startPosition.x = 1;
+	position.startPosition.y = 1;
+	position.endPosition.x = position.startPosition.x + (getShipLength() - 1);
+	position.endPosition.y = 1;
 }
 
 //Destructor
@@ -43,42 +48,103 @@ Ship::~Ship()
 	//Empty, nothing to be freed.
 }
 
-void Ship::initializePosition(position newStartPosition, position newEndPosition)
+shipType Ship::getShipType()
 {
-	startPosition.x = newStartPosition.x;	//Set ship location values.
-	endPosition.x = newEndPosition.x;
-	startPosition.y = newStartPosition.y;
-	endPosition.y = newEndPosition.y;
+	return name;
 }
 
+//Returns the position of the ship.
+shipLocation Ship::getShipPosition()
+{
+	return position;
+}
+	
 //Returns the length of the ship.
 uint8_t Ship::getShipLength()
 {
 	return maxSections;
 }
 
-//Returns a structure containing a specified ship sections grid reference.
-position Ship::returnShipGridReference(uint8_t sectionNumber)
+void Ship::incrementXPosition()
 {
-	position sectionLocation;
-	if (startPosition.x == endPosition.x)	//Ship is placed vertically.
+	if ((position.startPosition.x + 1 >= 1) && (position.endPosition.x + 1 <= 10))
 	{
-		sectionLocation.x = startPosition.x;
-		sectionLocation.y = startPosition.y + sectionNumber;
+		position.startPosition.x++;
+		position.endPosition.x++;
+	}
+}
+
+void Ship::decrementXPosition()
+{
+	if ((position.startPosition.x - 1 >= 1) && (position.endPosition.x - 1 <= 10))
+	{
+		position.startPosition.x--;
+		position.endPosition.x--;
+	}
+}
+
+void Ship::incrementYPosition()
+{
+	if ((position.startPosition.y + 1 >= 1) && (position.endPosition.y + 1 <= 10))
+	{
+		position.startPosition.y++;
+		position.endPosition.y++;
+	}
+}
+
+void Ship::decrementYPosition()
+{
+	if ((position.startPosition.y - 1 >= 1) && (position.endPosition.y - 1 <= 10))
+	{
+		position.startPosition.y--;
+		position.endPosition.y--;
+	}
+}
+
+void Ship::attemptRotation()
+{
+	if (position.startPosition.x == position.endPosition.x) //Ship is vertical and should be rotated horizontally.
+	{
+		uint8_t length = position.endPosition.y - position.startPosition.y;
+		if (position.endPosition.x + length <= 10)
+		{
+			position.endPosition.x = position.startPosition.x + length;
+			position.endPosition.y = position.startPosition.y;
+		}
+	}
+	else if (position.startPosition.y == position.endPosition.y) //Ship is horizontal and should be rotated vertically.
+	{
+		uint8_t length = position.endPosition.x - position.startPosition.x;
+		if (position.endPosition.y + length <= 10)
+		{
+			position.endPosition.y = position.startPosition.y + length;
+			position.endPosition.x = position.startPosition.x;
+		}
+	}
+}
+
+//Returns a structure containing a specified ship sections grid reference.
+singleLocation Ship::returnShipGridReference(uint8_t sectionNumber)
+{
+	singleLocation sectionLocation;
+	if (position.startPosition.x == position.endPosition.x)	//Ship is placed vertically.
+	{
+		sectionLocation.x = position.startPosition.x;
+		sectionLocation.y = position.startPosition.y + sectionNumber;
 	}
 	else	//Ship is placed horizontally.
 	{
-		sectionLocation.x = startPosition.x + sectionNumber;
-		sectionLocation.y = startPosition.y;
+		sectionLocation.x = position.startPosition.x + sectionNumber;
+		sectionLocation.y = position.startPosition.y;
 	}
 	return sectionLocation;
 }
 
 //Based on the location provided as arguments, returns whether any part of the ship was located at the position, returns true if so, false if not.
-bool Ship::isShipLocatedAtPosition(position strikePosition)
+bool Ship::isShipLocatedAtPosition(singleLocation strikePosition)
 {
-	if (((strikePosition.x >= startPosition.x) && (strikePosition.x <= endPosition.x) &&
-		(strikePosition.y >= startPosition.y) && (strikePosition.y <= endPosition.y)))
+	if (((strikePosition.x >= position.startPosition.x) && (strikePosition.x <= position.endPosition.x) &&
+		(strikePosition.y >= position.startPosition.y) && (strikePosition.y <= position.endPosition.y)))
 	{
 		remainingSections--;
 		return true;

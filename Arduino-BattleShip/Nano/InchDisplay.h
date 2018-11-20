@@ -25,7 +25,7 @@ private:
 	void prepareForDraw(uint8_t size);
 	void clearDisplay();
 	void refreshDisplay();
-	void drawStartAndEnd(position startPosition, position endPosition, positionType coordinate);
+	void drawStartAndEnd(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
 public:
 	InchDisplay();
 	~InchDisplay();
@@ -33,12 +33,12 @@ public:
 	void drawBattleShipLogo();
 	void drawConnectionScreen();
 	void drawPlaceYourShips();
-	void drawPlaceCarrier(position startPosition, position endPosition, positionType coordinate);
-	void drawPlaceBattleShip(position startPosition, position endPosition, positionType coordinate);
-	void drawPlaceCruiser(position startPosition, position endPosition, positionType coordinate);
-	void drawPlaceSubmarine(position startPosition, position endPosition, positionType coordinate);
-	void drawPlaceDestroyer(position startPosition, position endPosition, positionType coordinate);
-	void drawEnterTarget(position startPosition, positionType coordinate);
+	void drawPlaceCarrier(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+	void drawPlaceBattleShip(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+	void drawPlaceCruiser(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+	void drawPlaceSubmarine(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+	void drawPlaceDestroyer(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+	void drawEnterTarget(singleLocation startPosition, positionType coordinate);
 	void drawYourTurn();
 	void drawTheirTurn();
 	void drawFire();
