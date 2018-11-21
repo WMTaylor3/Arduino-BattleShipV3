@@ -28,7 +28,8 @@ class LowerGrid
 		gridReferenceState grid[10][10];
 		Ship ship[5];
 		InchDisplay* display;
-		void setShipLocation(Ship currentShip, positionType coordinate);
+		void setShipLocation(Ship& currentShip, positionType coordinate);
+		bool checkSpaceIsUnoccupied(Ship currentShip);
 		void pullShipLocationsIntoLowerGrid();
 	public:
 		LowerGrid();

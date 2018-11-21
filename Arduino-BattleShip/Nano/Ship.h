@@ -24,12 +24,14 @@ private:
 	uint8_t maxSections;	//Number of sections on the ship 5, 4, 3 or 2. Essentially the ships Hit Points (HP)
 	uint8_t remainingSections;	//Remaining sections on the ship not yet hit. Essentially the "Remaining HP"
 	shipLocation position;
+	bool vertical = false;	//Ship starts vertically.
 public:
 	Ship(shipType type);
 	~Ship();
 	shipType getShipType();
 	shipLocation getShipPosition();
 	uint8_t getShipLength();
+	bool isShipVertical();
 	void incrementXPosition();
 	void decrementXPosition();
 	void incrementYPosition();

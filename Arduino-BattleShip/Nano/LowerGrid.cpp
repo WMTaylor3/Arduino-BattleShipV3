@@ -49,11 +49,15 @@ void LowerGrid::initializeShipLocations()
 	{
 		setShipLocation(ship[i], X);
 		setShipLocation(ship[i], Y);
+		if (!checkSpaceIsUnoccupied(ship[i]))
+		{
+			i--;
+		}
 	}
 }
 
 //Communicates with the user to set the location and rotation of a specific ship on the board.
-void LowerGrid::setShipLocation(Ship currentShip, positionType coordinate)
+void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 {
 	InchDisplay* display = InchDisplay::getInstance();
 	ButtonInterface* buttons = ButtonInterface::getInstance();
@@ -120,6 +124,42 @@ void LowerGrid::setShipLocation(Ship currentShip, positionType coordinate)
 
 		previousState = selectedButton;
 	}
+}
+
+//Checks the current ship is not in a location occupied by another ship.
+bool LowerGrid::checkSpaceIsUnoccupied(Ship currentShip)
+{
+	Serial.print(F("Checking ship placement conflicts for ship #"));
+	Serial.println(currentShip.getShipType());
+	singleLocation position;
+	for (uint8_t i = 0; i < currentShip.getShipType(); i++) //For each of the ships placed thus far...
+	{
+		Serial.println(i);
+		if (currentShip.isShipVertical()) //If the ship we are currently placing is vertical, fix the X value and iterate along the Y value.
+		{
+			position.x = currentShip.getShipPosition().startPosition.x;
+			for (position.y = currentShip.getShipPosition().startPosition.y; position.y <= currentShip.getShipPosition().endPosition.y; position.y++)
+			{
+				if (ship[i].isShipLocatedAtPosition(position)) //Check for each section of the currently placing ship whether it overlaps with another ship, if not move onto the next ship and check all of the current ships sections again.
+				{
+					return false;
+				}
+			}
+		}
+		else //If the ship is horizontal, do the same as above but iterating along the X axes.
+		{
+			position.y = currentShip.getShipPosition().startPosition.y;
+			for (position.x = currentShip.getShipPosition().startPosition.x; position.x <= currentShip.getShipPosition().endPosition.x; position.x++)
+			{
+				if (ship[i].isShipLocatedAtPosition(position))
+				{
+					return false;
+				}
+			}
+		}
+	}
+	Serial.println(F("Conflict check sucessful"));
+	return true;
 }
 
 //Pulls the locations data from the five ships into the lower grid.
