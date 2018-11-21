@@ -31,12 +31,12 @@ class LowerGrid
 		void setShipLocation(Ship& currentShip, positionType coordinate);
 		bool checkSpaceIsUnoccupied(Ship currentShip);
 		void pullShipLocationsIntoLowerGrid();
+		void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 	public:
 		LowerGrid();
 		~LowerGrid();
 		void initializeShipLocations();
 		gridReferenceState checkIncomingStrike(singleLocation strikePosition);
-		void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 };
 
 #endif

@@ -54,6 +54,8 @@ void LowerGrid::initializeShipLocations()
 			i--;
 		}
 	}
+
+	pullShipLocationsIntoLowerGrid();
 }
 
 //Communicates with the user to set the location and rotation of a specific ship on the board.
