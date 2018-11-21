@@ -20,7 +20,7 @@ InchDisplay::InchDisplay() : display(-1)
 
 InchDisplay::~InchDisplay()
 {
-	free(instance);
+
 }
 
 //In accordance to singleton pattern this method is used instead of a public constructor to ensure only one instance exists.
@@ -74,7 +74,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 		display.setTextColor(1);
 
 		display.setCursor(40, 39);
-		display.print(" TO ");
+		display.print(F(" TO "));
 
 		display.setCursor(82, 39);
 		display.write(endPosition.x + 64);
@@ -102,7 +102,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 		display.setTextColor(1);
 
 		display.setCursor(46, 39);
-		display.print(" TO ");
+		display.print(F(" TO "));
 
 		display.setCursor(88, 39);
 		display.write(endPosition.x + 64);
@@ -130,7 +130,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 		display.setTextColor(1);
 
 		display.setCursor(34, 39);
-		display.print(" TO ");
+		display.print(F(" TO "));
 
 		display.setCursor(76, 39);
 		display.write(endPosition.x + 64);
@@ -158,7 +158,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 		display.setTextColor(1);
 
 		display.setCursor(40, 39);
-		display.print(" TO ");
+		display.print(F(" TO "));
 
 		display.setCursor(82, 39);
 		display.write(endPosition.x + 64);
@@ -184,9 +184,9 @@ void InchDisplay::drawBattleShipLogo()
 		delay(50);
 	}
 	display.setCursor(12, 6);
-	display.print("BATTLE");
+	display.print(F("BATTLE"));
 	display.setCursor(30, 39);
-	display.print("SHIP");
+	display.print(F("SHIP"));
 	display.display();
 	delay(2000);
 }
@@ -195,9 +195,9 @@ void InchDisplay::drawConnectionScreen()
 {
 	prepareForDraw(2);
 	display.setCursor(22, 14);
-	display.print("SEEKING");
+	display.print(F("SEEKING"));
 	display.setCursor(22, 39);
-	display.print("PARTNER");
+	display.print(F("PARTNER"));
 	display.display();
 }
 
@@ -205,9 +205,9 @@ void InchDisplay::drawPlaceYourShips()
 {
 	prepareForDraw(2);
 	display.setCursor(4, 14);
-	display.print("PLACE YOUR");
+	display.print(F("PLACE YOUR"));
 	display.setCursor(37, 39);
-	display.print("SHIPS");
+	display.print(F("SHIPS"));
 	display.display();
 }
 
@@ -215,7 +215,7 @@ void InchDisplay::drawPlaceCarrier(singleLocation startPosition, singleLocation 
 {
 	prepareForDraw(2);
 	display.setCursor(22, 14);
-	display.print("CARRIER");
+	display.print(F("CARRIER"));
 	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
@@ -224,7 +224,7 @@ void InchDisplay::drawPlaceBattleShip(singleLocation startPosition, singleLocati
 {
 	prepareForDraw(2);
 	display.setCursor(4, 14);
-	display.print("BATTLESHIP");
+	display.print(F("BATTLESHIP"));
 	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
@@ -233,7 +233,7 @@ void InchDisplay::drawPlaceCruiser(singleLocation startPosition, singleLocation 
 {
 	prepareForDraw(2);
 	display.setCursor(22, 14);
-	display.print("CRUISER");
+	display.print(F("CRUISER"));
 	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
@@ -242,7 +242,7 @@ void InchDisplay::drawPlaceSubmarine(singleLocation startPosition, singleLocatio
 {
 	prepareForDraw(2);
 	display.setCursor(10, 14);
-	display.print("SUBMARINE");
+	display.print(F("SUBMARINE"));
 	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
@@ -251,7 +251,7 @@ void InchDisplay::drawPlaceDestroyer(singleLocation startPosition, singleLocatio
 {
 	prepareForDraw(2);
 	display.setCursor(10, 14);
-	display.print("DESTROYER");
+	display.print(F("DESTROYER"));
 	drawStartAndEnd(startPosition, endPosition, coordinate);
 	display.display();
 }
@@ -260,7 +260,7 @@ void InchDisplay::drawEnterTarget(singleLocation targetPosition, positionType co
 {
 	prepareForDraw(2);
 	display.setCursor(28, 14);
-	display.print("TARGET");
+	display.print(F("TARGET"));
 
 	if (targetPosition.y >= 10)
 	{
@@ -308,9 +308,9 @@ void InchDisplay::drawYourTurn()
 {
 	prepareForDraw(2);
 	display.setCursor(41, 14);
-	display.print("YOUR");
+	display.print(F("YOUR"));
 	display.setCursor(41, 39);
-	display.print("TURN");
+	display.print(F("TURN"));
 	display.display();
 }
 
@@ -318,9 +318,9 @@ void InchDisplay::drawTheirTurn()
 {
 	prepareForDraw(2);
 	display.setCursor(35, 14);
-	display.print("THEIR");
+	display.print(F("THEIR"));
 	display.setCursor(41, 39);
-	display.print("TURN");
+	display.print(F("TURN"));
 	display.display();
 }
 
@@ -330,7 +330,7 @@ void InchDisplay::drawFire()
 	{
 		prepareForDraw(4);
 		display.setCursor(8, 18);
-		display.print("FIRE!");
+		display.print(F("FIRE!"));
 		display.display();
 		delay(200);
 		display.clearDisplay();
@@ -343,7 +343,7 @@ void InchDisplay::drawHit()
 {
 	prepareForDraw(4);
 	display.setCursor(20, 18);
-	display.print("HIT!");
+	display.print(F("HIT!"));
 	display.display();
 }
 
@@ -351,9 +351,9 @@ void InchDisplay::drawHitAndSunk()
 {
 	prepareForDraw(2);
 	display.setCursor(46, 14);
-	display.print("HIT");
+	display.print(F("HIT"));
 	display.setCursor(16, 39);
-	display.print("AND SUNK");
+	display.print(F("AND SUNK"));
 	display.display();
 }
 
@@ -361,7 +361,7 @@ void InchDisplay::drawMiss()
 {
 	prepareForDraw(4);
 	display.setCursor(18, 18);
-	display.print("MISS");
+	display.print(F("MISS"));
 	display.display();
 }
 
@@ -369,9 +369,9 @@ void InchDisplay::drawYouWin()
 {
 	prepareForDraw(3);
 	display.setCursor(38, 6);
-	display.print("YOU");
+	display.print(F("YOU"));
 	display.setCursor(38, 39);
-	display.print("WIN");
+	display.print(F("WIN"));
 	display.display();
 }
 
@@ -379,8 +379,8 @@ void InchDisplay::drawYouLose()
 {
 	prepareForDraw(3);
 	display.setCursor(38, 6);
-	display.print("YOU");
+	display.print(F("YOU"));
 	display.setCursor(28, 39);
-	display.print("LOSE");
+	display.print(F("LOSE"));
 	display.display();
 }

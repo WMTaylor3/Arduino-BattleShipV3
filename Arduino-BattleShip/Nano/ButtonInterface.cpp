@@ -54,7 +54,7 @@ buttonPress ButtonInterface::getButtonPress(buttonPress previousState = NoButton
 		unsigned long startTime = millis();
 		while (digitalRead(buttonCenter) == HIGH) { delay(10); }
 		unsigned long endTime = millis();
-		if (endTime - startTime >= 1000)
+		if (endTime - startTime >= 500)
 		{
 			Serial.println("Held");
 			return CenterHeld;
