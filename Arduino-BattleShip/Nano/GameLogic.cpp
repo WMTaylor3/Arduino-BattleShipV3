@@ -26,14 +26,14 @@ GameLogic::~GameLogic()
 //In accordance to singleton pattern this method is used instead of a public constructor to ensure only one instance exists.
 GameLogic* GameLogic::getInstance()
 {
-	Serial.print("GameLogic.cpp: Entered getInstance. FreeMemory = ");
+	Serial.print(F("GameLogic.cpp: Entered getInstance. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	if (instance == 0)
 	{
 		instance = new GameLogic();
 	}
-	Serial.print("GameLogic.cpp: Returning from getInstance. FreeMemory = ");
+	Serial.print(F("GameLogic.cpp: Returning from getInstance. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	return instance;
@@ -41,7 +41,7 @@ GameLogic* GameLogic::getInstance()
 
 void GameLogic::initializeGame()
 {
-	Serial.print("GameLogic.cpp: Initalizing Ship Locations. FreeMemory = ");
+	Serial.print(F("GameLogic.cpp: Initalizing Ship Locations. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	lowerGrid.initializeShipLocations();

@@ -15,7 +15,7 @@
 //Constructor. Does not include ship locations, these are handled later after the user has performed input.
 Ship::Ship(shipType typeOfShip)
 {
-	Serial.print("Ship.cpp: Beginning of Ship Constructor. FreeMemory = ");
+	Serial.print(F("Ship.cpp: Beginning of Ship Constructor. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	name = typeOfShip;	//Set ship type and therefore its name.
@@ -70,6 +70,11 @@ uint8_t Ship::getShipLength()
 	return maxSections;
 }
 
+bool Ship::isShipVertical()
+{
+	return vertical;
+}
+
 void Ship::incrementXPosition()
 {
 	if ((position.startPosition.x + 1 >= 1) && (position.endPosition.x + 1 <= 10))
@@ -108,22 +113,24 @@ void Ship::decrementYPosition()
 
 void Ship::attemptRotation()
 {
-	if (position.startPosition.x == position.endPosition.x) //Ship is vertical and should be rotated horizontally.
+	if (vertical) //Ship is vertical and should be rotated horizontally.
 	{
 		uint8_t length = position.endPosition.y - position.startPosition.y;
 		if (position.endPosition.x + length <= 10)
 		{
 			position.endPosition.x = position.startPosition.x + length;
 			position.endPosition.y = position.startPosition.y;
+			vertical = false;
 		}
 	}
-	else if (position.startPosition.y == position.endPosition.y) //Ship is horizontal and should be rotated vertically.
+	else //Ship is horizontal and should be rotated vertically.
 	{
 		uint8_t length = position.endPosition.x - position.startPosition.x;
 		if (position.endPosition.y + length <= 10)
 		{
 			position.endPosition.y = position.startPosition.y + length;
 			position.endPosition.x = position.startPosition.x;
+			vertical = true;
 		}
 	}
 }
@@ -132,7 +139,7 @@ void Ship::attemptRotation()
 singleLocation Ship::returnShipGridReference(uint8_t sectionNumber)
 {
 	singleLocation sectionLocation;
-	if (position.startPosition.x == position.endPosition.x)	//Ship is placed vertically.
+	if (vertical)	//Ship is placed vertically.
 	{
 		sectionLocation.x = position.startPosition.x;
 		sectionLocation.y = position.startPosition.y + sectionNumber;

@@ -25,18 +25,18 @@ GameLogic* game;
 void setup()
 {
 	Serial.begin(9600);
-	Serial.print("Nano.ino: Beginning Setup. FreeMemory = ");
+	Serial.print(F("Nano.ino: Beginning Setup. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	display = InchDisplay::getInstance();
 	display->initializeDisplay();
 	display->drawBattleShipLogo();
 
-	Serial.print("Nano.ino: Initialized Display. FreeMemory = ");
+	Serial.print(F("Nano.ino: Initialized Display. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	game = GameLogic::getInstance();
-	Serial.print("Nano.ino: Completed Construction of GameLogic. FreeMemory = ");
+	Serial.print(F("Nano.ino: Completed Construction of GameLogic. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	game->initializeGame();

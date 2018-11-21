@@ -16,7 +16,7 @@
 //Constructor. Creates a ship of each type and sets all grid references to empty.
 LowerGrid::LowerGrid() : ship{ Carrier, Battleship, Cruiser, Submarine, Destroyer }
 {
-	Serial.print("LowerGrid.cpp: Beginning Construction of LowerGrid. FreeMemory = ");
+	Serial.print(F("LowerGrid.cpp: Beginning Construction of LowerGrid. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 	for (uint8_t i = 0; i < 10; i++)	//For each row in the upper grid...
@@ -28,7 +28,7 @@ LowerGrid::LowerGrid() : ship{ Carrier, Battleship, Cruiser, Submarine, Destroye
 	}
 
 	display = InchDisplay::getInstance();
-	Serial.print("LowerGrid.cpp: Completed Construction of LowerGrid. FreeMemory = ");
+	Serial.print(F("LowerGrid.cpp: Completed Construction of LowerGrid. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);
 }

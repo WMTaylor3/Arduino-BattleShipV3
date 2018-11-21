@@ -20,7 +20,7 @@ ButtonInterface::ButtonInterface()
 //Destructor
 ButtonInterface::~ButtonInterface()
 {
-	free(instance);
+
 }
 
 //In accordance to singleton pattern this method is used instead of a public constructor to ensure only one instance exists.
