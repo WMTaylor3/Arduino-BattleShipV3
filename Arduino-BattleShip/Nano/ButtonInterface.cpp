@@ -46,9 +46,19 @@ buttonPress ButtonInterface::getButtonPress(buttonPress previousState = NoButton
 		//Left button
 		if ((digitalRead(buttonLeft) == HIGH) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == LOW))
 		{
+			unsigned long startTime = millis();
 			while (digitalRead(buttonLeft) == HIGH) { delay(10); }
-			Serial.println(F("Left"));
-			return Left;
+			unsigned long endTime = millis();
+			if (endTime - startTime >= 500)
+			{
+				Serial.println(F("LeftHeld"));
+				return LeftHeld;
+			}
+			else
+			{
+				Serial.println(F("LeftPushed"));
+				return LeftPushed;
+			}
 		}
 		//Center button
 		if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == HIGH) && (digitalRead(buttonRight) == LOW))
@@ -58,21 +68,31 @@ buttonPress ButtonInterface::getButtonPress(buttonPress previousState = NoButton
 			unsigned long endTime = millis();
 			if (endTime - startTime >= 500)
 			{
-				Serial.println(F("Held"));
+				Serial.println(F("CenterHeld"));
 				return CenterHeld;
 			}
 			else
 			{
-				Serial.println(F("Pushed"));
+				Serial.println(F("CenterPushed"));
 				return CenterPushed;
 			}
 		}
 		//Right button
 		if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == HIGH))
 		{
+			unsigned long startTime = millis();
 			while (digitalRead(buttonRight) == HIGH) { delay(10); }
-			Serial.println(F("Right"));
-			return Right;
+			unsigned long endTime = millis();
+			if (endTime - startTime >= 500)
+			{
+				Serial.println(F("RightHeld"));
+				return RightHeld;
+			}
+			else
+			{
+				Serial.println(F("RightPushed"));
+				return RightPushed;
+			}
 		}
 	}
 	else

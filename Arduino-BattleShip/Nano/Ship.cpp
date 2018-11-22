@@ -111,7 +111,7 @@ void Ship::decrementYPosition()
 	}
 }
 
-void Ship::attemptRotation()
+bool Ship::attemptRotation()
 {
 	if (vertical) //Ship is vertical and should be rotated horizontally.
 	{
@@ -121,6 +121,7 @@ void Ship::attemptRotation()
 			position.endPosition.x = position.startPosition.x + length;
 			position.endPosition.y = position.startPosition.y;
 			vertical = false;
+			return true;
 		}
 	}
 	else //Ship is horizontal and should be rotated vertically.
@@ -131,6 +132,11 @@ void Ship::attemptRotation()
 			position.endPosition.y = position.startPosition.y + length;
 			position.endPosition.x = position.startPosition.x;
 			vertical = true;
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 }

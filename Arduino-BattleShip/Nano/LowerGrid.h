@@ -28,8 +28,9 @@ class LowerGrid
 		gridReferenceState grid[10][10];
 		Ship ship[5];
 		InchDisplay* display;
-		void setShipLocation(Ship& currentShip, positionType coordinate);
+		buttonPress setShipLocation(Ship& currentShip, positionType coordinate);
 		bool checkSpaceIsUnoccupied(Ship currentShip);
+		bool checkGridReferenceIsUnoccupied(Ship latestShipPlaced, singleLocation position);
 		void pullShipLocationsIntoLowerGrid(Ship latestShipPlaced);
 		void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 	public:

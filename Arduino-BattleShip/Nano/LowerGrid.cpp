@@ -47,19 +47,37 @@ void LowerGrid::initializeShipLocations()
 
 	for (int i = 0; i < 5; i++)
 	{
-		setShipLocation(ship[i], X);
-		setShipLocation(ship[i], Y);
+		buttonPress result = setShipLocation(ship[i], X);
+		while (true)
+		{
+			if (result == LeftHeld)
+			{
+				result = setShipLocation(ship[i], X);
+			}
+			else if (result == RightHeld)
+			{
+				result = setShipLocation(ship[i], Y);
+			}
+			else
+			{
+				break;
+			}
+		}
 		if (!checkSpaceIsUnoccupied(ship[i]))
 		{
 			i--;
 		}
-		pullShipLocationsIntoLowerGrid(ship[i]);
+		else
+		{
+			pullShipLocationsIntoLowerGrid(ship[i]);
+		}
 	}
 }
 
 //Communicates with the user to set the location and rotation of a specific ship on the board.
-void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
+buttonPress LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 {
+	Serial.println("Placing Ship");
 	InchDisplay* display = InchDisplay::getInstance();
 	ButtonInterface* buttons = ButtonInterface::getInstance();
 	buttonPress previousState = NoButton;
@@ -96,21 +114,8 @@ void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 			{
 				currentShip.attemptRotation();
 			}
-			else if (selectedButton == Left)
+			else if (selectedButton == LeftPushed)
 			{
-				removeShipGhostOutline(currentShip);
-				if (coordinate == X)
-				{
-					currentShip.incrementXPosition();
-				}
-				else if (coordinate == Y)
-				{
-					currentShip.incrementYPosition();
-				}
-			}
-			else if (selectedButton == Right)
-			{
-				removeShipGhostOutline(currentShip);
 				if (coordinate == X)
 				{
 					currentShip.decrementXPosition();
@@ -120,10 +125,28 @@ void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 					currentShip.decrementYPosition();
 				}
 			}
+			else if (selectedButton == RightPushed)
+			{
+				if (coordinate == X)
+				{
+					currentShip.incrementXPosition();
+				}
+				else if (coordinate == Y)
+				{
+					currentShip.incrementYPosition();
+				}
+			}
 			else if (selectedButton == CenterHeld)
 			{
-				removeShipGhostOutline(currentShip);
-				return;
+				return CenterHeld;
+			}
+			else if (selectedButton == LeftHeld)
+			{
+				return LeftHeld;
+			}
+			else if (selectedButton == RightHeld)
+			{
+				return RightHeld;
 			}
 			displayShipGhostOutline(currentShip);
 		}
@@ -132,20 +155,29 @@ void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 	}
 }
 
-//Checks the current ship is not in a location occupied by another ship.
+//Checks if a ships placement conflicts with any preexisting placements.
 bool LowerGrid::checkSpaceIsUnoccupied(Ship currentShip)
 {
-	for (uint8_t inspectedShip = 0; inspectedShip < currentShip.getShipType(); inspectedShip++) //For each of the ships placed thus far...
+	for (uint8_t section = 0; section < currentShip.getShipLength(); section++) //For each section in this current ship being placed...
 	{
-		for (uint8_t section = 0; section < currentShip.getShipLength(); section++) //For each section in this current ship being placed...
+		if (!checkGridReferenceIsUnoccupied(currentShip, currentShip.getShipSectionGridReference(section)))
 		{
-			if (ship[inspectedShip].isShipLocatedAtPosition(currentShip.getShipSectionGridReference(section))) //Ensure the current section is nowhere along an existing ship.
-			{
-				return false;
-			}
+			return false;
 		}
 	}
-	Serial.println(F("Conflict check sucessful"));
+	return true;
+}
+
+//Checks if a single grid reference is unoccupied.
+bool LowerGrid::checkGridReferenceIsUnoccupied(Ship latestShipPlaced, singleLocation position)
+{
+	for (uint8_t inspectedShip = 0; inspectedShip < latestShipPlaced.getShipType(); inspectedShip++) //For each of the ships placed thus far...
+	{
+		if (ship[inspectedShip].isShipLocatedAtPosition(position)) //Ensure the current section is nowhere along an existing ship.
+		{
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -172,8 +204,16 @@ void LowerGrid::displayShipGhostOutline(Ship ship)
 {
 	for (uint8_t section = 0; section < ship.getShipLength(); section++)
 	{
-		transmitToMatrix(Occupied, ship.getShipSectionGridReference(section));
-		delay(15);
+		if (checkGridReferenceIsUnoccupied(ship, ship.getShipSectionGridReference(section)))
+		{
+			transmitToMatrix(Occupied, ship.getShipSectionGridReference(section));
+			delay(15);
+		}
+		else
+		{
+			transmitToMatrix(Hit, ship.getShipSectionGridReference(section));
+			delay(15);
+		}
 	}
 }
 
@@ -182,8 +222,16 @@ void LowerGrid::removeShipGhostOutline(Ship ship)
 {
 	for (uint8_t section = 0; section < ship.getShipLength(); section++)
 	{
-		transmitToMatrix(Empty, ship.getShipSectionGridReference(section));
-		delay(15);
+		if (checkGridReferenceIsUnoccupied(ship, ship.getShipSectionGridReference(section)))
+		{
+			transmitToMatrix(Empty, ship.getShipSectionGridReference(section));
+			delay(15);
+		}
+		else
+		{
+			transmitToMatrix(Occupied, ship.getShipSectionGridReference(section));
+			delay(15);
+		}
 	}
 }
 

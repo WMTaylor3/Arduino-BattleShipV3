@@ -36,7 +36,7 @@ public:
 	void decrementXPosition();
 	void incrementYPosition();
 	void decrementYPosition();
-	void attemptRotation();
+	bool attemptRotation();
 	singleLocation getShipSectionGridReference(uint8_t sectionNumber);
 	bool isShipLocatedAtPosition(singleLocation strikePosition);
 	bool isShipSunk();

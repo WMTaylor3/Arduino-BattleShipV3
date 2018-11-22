@@ -36,7 +36,7 @@ struct gridConnections
 	uint8_t ledConnections[10][3];	//Identifies where each vLEDs anode is controlled from.
 };
 
-typedef enum { Left, CenterPushed, Right, CenterHeld, NoButton } buttonPress;
+typedef enum { LeftPushed, LeftHeld, CenterPushed, CenterHeld, RightPushed, RightHeld, NoButton } buttonPress;
 typedef enum { X, Y } positionType;
 typedef enum { Carrier = 0, Battleship = 1, Cruiser = 2, Submarine = 3, Destroyer = 4 } shipType;
 typedef enum { Hit = 0, HitAndSunk = 1, Miss = 2, Occupied = 3, Empty = 4 } gridReferenceState;
