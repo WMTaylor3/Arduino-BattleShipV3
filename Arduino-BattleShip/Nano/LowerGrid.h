@@ -3,7 +3,7 @@
 *
 *	Source file for representation of the lower game grid.
 *	Note: This only includes the vitual representation of the grid and the functions needed to maintain it.
-*		  All methods related to drawing on the LED grid can be found in LEDMatrix.cpp and LEDMatrix.h.
+*		  All methods related to drawing on the LED grid can be found in MegaUpperGrid.ino.
 *		  All functions related to the logical running of the game can be found in GameLogic.cpp and GameLogic.h
 *
 *	By William Taylor https://github.com/WMTaylor3
@@ -37,6 +37,9 @@ class LowerGrid
 		~LowerGrid();
 		void initializeShipLocations();
 		gridReferenceState checkIncomingStrike(singleLocation strikePosition);
+		void displayShipGhostOutline(Ship ship);
+		void removeShipGhostOutline(Ship ship);
+		bool transmitToMatrix(gridReferenceState state, singleLocation gridPosition);
 };
 
 #endif

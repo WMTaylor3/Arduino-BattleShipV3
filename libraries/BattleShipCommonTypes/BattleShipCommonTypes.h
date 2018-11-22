@@ -38,7 +38,7 @@ struct gridConnections
 
 typedef enum { Left, CenterPushed, Right, CenterHeld, NoButton } buttonPress;
 typedef enum { X, Y } positionType;
-typedef enum { Carrier, Battleship, Cruiser, Submarine, Destroyer } shipType;
-typedef enum { Hit, HitAndSunk, Miss, Occupied, Empty } gridReferenceState;
+typedef enum { Carrier = 0, Battleship = 1, Cruiser = 2, Submarine = 3, Destroyer = 4 } shipType;
+typedef enum { Hit = 0, HitAndSunk = 1, Miss = 2, Occupied = 3, Empty = 4 } gridReferenceState;
 
 #endif

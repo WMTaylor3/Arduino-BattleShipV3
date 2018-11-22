@@ -25,6 +25,7 @@ GameLogic* game;
 void setup()
 {
 	Serial.begin(9600);
+	Serial1.begin(115200);
 	Serial.print(F("Nano.ino: Beginning Setup. FreeMemory = "));
 	Serial.println(freeMemory());
 	delay(300);

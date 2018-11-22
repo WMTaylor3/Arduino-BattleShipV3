@@ -3,7 +3,7 @@
 *
 *	Source file for representation of the lower game grid.
 *	Note: This only includes the vitual representation of the grid and the functions needed to maintain it.
-*		  All methods related to drawing on the LED grid can be found in LEDMatrix.cpp and LEDMatrix.h.
+*		  All methods related to drawing on the LED grid can be found in MegaUpperGrid.ino.
 *		  All functions related to the logical running of the game can be found in GameLogic.cpp and GameLogic.h
 *
 *	By William Taylor https://github.com/WMTaylor3
@@ -47,6 +47,7 @@ void LowerGrid::initializeShipLocations()
 
 	for (int i = 0; i < 5; i++)
 	{
+		displayShipGhostOutline(ship[i]);
 		setShipLocation(ship[i], X);
 		setShipLocation(ship[i], Y);
 		if (!checkSpaceIsUnoccupied(ship[i]))
@@ -89,39 +90,46 @@ void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 
 		selectedButton = buttons->getButtonPress(previousState);
 
-		if (selectedButton == CenterPushed)
+		if ((selectedButton == CenterPushed) ||
+			(selectedButton == Left) ||
+			(selectedButton == Right) ||
+			(selectedButton == CenterHeld))
 		{
-			currentShip.attemptRotation();
-		}
-		else if (selectedButton == Left)
-		{
-			if (coordinate == X)
+			removeShipGhostOutline(currentShip);
+			if (selectedButton == CenterPushed)
 			{
-				currentShip.incrementXPosition();
+				currentShip.attemptRotation();
 			}
-			else if (coordinate == Y)
+			else if (selectedButton == Left)
 			{
-				currentShip.incrementYPosition();
+				removeShipGhostOutline(currentShip);
+				if (coordinate == X)
+				{
+					currentShip.incrementXPosition();
+				}
+				else if (coordinate == Y)
+				{
+					currentShip.incrementYPosition();
+				}
 			}
-		}
-		else if (selectedButton == Right)
-		{
-			if (coordinate == X)
+			else if (selectedButton == Right)
 			{
-				currentShip.decrementXPosition();
+				removeShipGhostOutline(currentShip);
+				if (coordinate == X)
+				{
+					currentShip.decrementXPosition();
+				}
+				else if (coordinate == Y)
+				{
+					currentShip.decrementYPosition();
+				}
 			}
-			else if (coordinate == Y)
+			else if (selectedButton == CenterHeld)
 			{
-				currentShip.decrementYPosition();
+				removeShipGhostOutline(currentShip);
+				return;
 			}
-		}
-		else if (selectedButton == CenterHeld)
-		{
-			return;
-		}
-		else
-		{
-			//Do nothing.
+			displayShipGhostOutline(currentShip);
 		}
 
 		previousState = selectedButton;
@@ -199,7 +207,7 @@ void LowerGrid::pullShipLocationsIntoLowerGrid()
 	}
 }
 
-//Checks a strike coming in from the other game board and illuminates the bottom display as required.
+//Checks a strike coming in from the other game board.
 gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
 {
 	gridReferenceState result;
@@ -235,5 +243,60 @@ gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
 void LowerGrid::recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition)
 {
 	//Minus one to translate between the 1-10 notation of the players view of the grid and the 0-9 representation of the array.
-	grid[gridPosition.x - 1][gridPosition.y - 1] = state;
+	singleLocation translatedPosition;
+	translatedPosition.x = gridPosition.x - 1;
+	translatedPosition.y = gridPosition.y - 1;
+
+	grid[translatedPosition.x][translatedPosition.y] = state;
+	transmitToMatrix(state, translatedPosition);
+}
+
+//Adds a temporary ship to the LED matrix suring the ship placement routine, not stored to the local grid.
+void LowerGrid::displayShipGhostOutline(Ship ship)
+{
+	for (uint8_t section = 0; section < ship.getShipLength(); section++)
+	{
+		transmitToMatrix(Occupied, ship.returnShipGridReference(section));
+		delay(15);
+	}
+}
+
+//Clears the temporary outline of the ship from the LED matrix. (During ship placement)
+void LowerGrid::removeShipGhostOutline(Ship ship)
+{
+	for (uint8_t section = 0; section < ship.getShipLength(); section++)
+	{
+		transmitToMatrix(Empty, ship.returnShipGridReference(section));
+		delay(15);
+	}
+}
+
+//Method to transmit data to the grid Mega.
+bool LowerGrid::transmitToMatrix(gridReferenceState state, singleLocation gridPosition)
+{
+	uint8_t message[3];
+
+	//Construct message.
+	message[0] = gridPosition.x - 1;
+	message[1] = gridPosition.y - 1;
+	message[2] = state;
+
+	//Transmit to the grid.
+	Serial1.write(message[0]);
+	Serial1.write(message[1]);
+	Serial1.write(message[2]);
+
+	//Attempt to retrieve and validate confirmation message.
+	for (uint8_t readAttempt = 0; readAttempt < 10; readAttempt++)
+	{
+		if (Serial1.read() == '-')
+		{
+			return true;
+		}
+		else
+		{
+			delay(1);
+		}
+	}
+	return false;
 }
