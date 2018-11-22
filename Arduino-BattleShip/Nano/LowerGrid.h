@@ -30,16 +30,16 @@ class LowerGrid
 		InchDisplay* display;
 		void setShipLocation(Ship& currentShip, positionType coordinate);
 		bool checkSpaceIsUnoccupied(Ship currentShip);
-		void pullShipLocationsIntoLowerGrid();
+		void pullShipLocationsIntoLowerGrid(Ship latestShipPlaced);
 		void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 	public:
 		LowerGrid();
 		~LowerGrid();
 		void initializeShipLocations();
-		gridReferenceState checkIncomingStrike(singleLocation strikePosition);
 		void displayShipGhostOutline(Ship ship);
 		void removeShipGhostOutline(Ship ship);
 		bool transmitToMatrix(gridReferenceState state, singleLocation gridPosition);
+		gridReferenceState checkIncomingStrike(singleLocation strikePosition);
 };
 
 #endif

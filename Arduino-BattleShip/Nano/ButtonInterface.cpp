@@ -41,35 +41,42 @@ buttonPress ButtonInterface::getButtonPress(buttonPress previousState = NoButton
 	{
 		return NoButton;
 	}
-	//Left button
-	if ((digitalRead(buttonLeft) == HIGH) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == LOW) && (previousState == NoButton))
+	if (previousState == NoButton)
 	{
-		while (digitalRead(buttonLeft) == HIGH) { delay(10); }
-		Serial.println(F("Left"));
-		return Left;
-	}
-	//Center button
-	if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == HIGH) && (digitalRead(buttonRight) == LOW) && (previousState == NoButton))
-	{
-		unsigned long startTime = millis();
-		while (digitalRead(buttonCenter) == HIGH) { delay(10); }
-		unsigned long endTime = millis();
-		if (endTime - startTime >= 500)
+		//Left button
+		if ((digitalRead(buttonLeft) == HIGH) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == LOW))
 		{
-			Serial.println(F("Held"));
-			return CenterHeld;
+			while (digitalRead(buttonLeft) == HIGH) { delay(10); }
+			Serial.println(F("Left"));
+			return Left;
 		}
-		else
+		//Center button
+		if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == HIGH) && (digitalRead(buttonRight) == LOW))
 		{
-			Serial.println(F("Pushed"));
-			return CenterPushed;
+			unsigned long startTime = millis();
+			while (digitalRead(buttonCenter) == HIGH) { delay(10); }
+			unsigned long endTime = millis();
+			if (endTime - startTime >= 500)
+			{
+				Serial.println(F("Held"));
+				return CenterHeld;
+			}
+			else
+			{
+				Serial.println(F("Pushed"));
+				return CenterPushed;
+			}
+		}
+		//Right button
+		if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == HIGH))
+		{
+			while (digitalRead(buttonRight) == HIGH) { delay(10); }
+			Serial.println(F("Right"));
+			return Right;
 		}
 	}
-	//Right button
-	if ((digitalRead(buttonLeft) == LOW) && (digitalRead(buttonCenter) == LOW) && (digitalRead(buttonRight) == HIGH) && (previousState == NoButton))
+	else
 	{
-		while (digitalRead(buttonRight) == HIGH) { delay(10); }
-		Serial.println(F("Right"));
-		return Right;
+		return NoButton;
 	}
 }

@@ -53,9 +53,8 @@ void LowerGrid::initializeShipLocations()
 		{
 			i--;
 		}
+		pullShipLocationsIntoLowerGrid(ship[i]);
 	}
-
-	pullShipLocationsIntoLowerGrid();
 }
 
 //Communicates with the user to set the location and rotation of a specific ship on the board.
@@ -90,10 +89,7 @@ void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 
 		selectedButton = buttons->getButtonPress(previousState);
 
-		if ((selectedButton == CenterPushed) ||
-			(selectedButton == Left) ||
-			(selectedButton == Right) ||
-			(selectedButton == CenterHeld))
+		if (selectedButton != NoButton)
 		{
 			removeShipGhostOutline(currentShip);
 			if (selectedButton == CenterPushed)
@@ -139,7 +135,6 @@ void LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 //Checks the current ship is not in a location occupied by another ship.
 bool LowerGrid::checkSpaceIsUnoccupied(Ship currentShip)
 {
-	singleLocation position;
 	for (uint8_t inspectedShip = 0; inspectedShip < currentShip.getShipType(); inspectedShip++) //For each of the ships placed thus far...
 	{
 		for (uint8_t section = 0; section < currentShip.getShipLength(); section++) //For each section in this current ship being placed...
@@ -155,61 +150,21 @@ bool LowerGrid::checkSpaceIsUnoccupied(Ship currentShip)
 }
 
 //Pulls the locations data from the five ships into the lower grid.
-void LowerGrid::pullShipLocationsIntoLowerGrid(Ship latestShipPlaced)
+void LowerGrid::pullShipLocationsIntoLowerGrid(Ship currentShip)
 {
-	singleLocation sectionLocation;
-	for (uint8_t currentShip = 0; currentShip < latestShipPlaced.getShipType(); currentShip++)
+	for (uint8_t i = 0; i < currentShip.getShipLength(); i++)
 	{
-		for (uint8_t i = 0; i < ship[currentShip].getShipLength(); i++)		//Pull Carrier locations.
-		{
-			sectionLocation = ship[currentShip].getShipSectionGridReference(i);
-			recordStateToLocalGrid(Occupied, sectionLocation);
-		}
+		recordStateToLocalGrid(Occupied, currentShip.getShipSectionGridReference(i));
+		delay(20);
 	}
-}
-
-//Checks a strike coming in from the other game board.
-gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
-{
-	gridReferenceState result;
-	bool missed = true;
-
-	for(Ship s : ship)
-	{
-		if (s.isShipLocatedAtPosition(strikePosition))
-		{
-			missed = false;
-			if (s.isShipSunk())
-			{
-				result = HitAndSunk;
-			}
-			else
-			{
-				result = Hit;
-			}
-		}
-	}
-
-	if(missed)
-	{
-		result = Miss;
-	}
-
-	recordStateToLocalGrid(result, strikePosition);
-
-	return result;
 }
 
 //Records a grid state at a location on the local grid.
 void LowerGrid::recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition)
 {
 	//Minus one to translate between the 1-10 notation of the players view of the grid and the 0-9 representation of the array.
-	singleLocation translatedPosition;
-	translatedPosition.x = gridPosition.x - 1;
-	translatedPosition.y = gridPosition.y - 1;
-
-	grid[translatedPosition.x][translatedPosition.y] = state;
-	transmitToMatrix(state, translatedPosition);
+	grid[gridPosition.x - 1][gridPosition.y - 1] = state;
+	transmitToMatrix(state, gridPosition);
 }
 
 //Adds a temporary ship to the LED matrix suring the ship placement routine, not stored to the local grid.
@@ -218,7 +173,7 @@ void LowerGrid::displayShipGhostOutline(Ship ship)
 	for (uint8_t section = 0; section < ship.getShipLength(); section++)
 	{
 		transmitToMatrix(Occupied, ship.getShipSectionGridReference(section));
-		delay(5);
+		delay(15);
 	}
 }
 
@@ -228,7 +183,7 @@ void LowerGrid::removeShipGhostOutline(Ship ship)
 	for (uint8_t section = 0; section < ship.getShipLength(); section++)
 	{
 		transmitToMatrix(Empty, ship.getShipSectionGridReference(section));
-		delay(5);
+		delay(15);
 	}
 }
 
@@ -260,4 +215,36 @@ bool LowerGrid::transmitToMatrix(gridReferenceState state, singleLocation gridPo
 		}
 	}
 	return false;
+}
+
+//Checks a strike coming in from the other game board.
+gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
+{
+	gridReferenceState result;
+	bool missed = true;
+
+	for (Ship s : ship)
+	{
+		if (s.isShipLocatedAtPosition(strikePosition))
+		{
+			missed = false;
+			if (s.isShipSunk())
+			{
+				result = HitAndSunk;
+			}
+			else
+			{
+				result = Hit;
+			}
+		}
+	}
+
+	if (missed)
+	{
+		result = Miss;
+	}
+
+	recordStateToLocalGrid(result, strikePosition);
+
+	return result;
 }

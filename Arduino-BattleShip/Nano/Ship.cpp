@@ -136,7 +136,7 @@ void Ship::attemptRotation()
 }
 
 //Returns a structure containing a specified ship sections grid reference.
-singleLocation Ship::returnShipGridReference(uint8_t sectionNumber)
+singleLocation Ship::getShipSectionGridReference(uint8_t sectionNumber)
 {
 	singleLocation sectionLocation;
 	if (vertical)	//Ship is placed vertically.
