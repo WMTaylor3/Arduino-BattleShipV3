@@ -26,6 +26,7 @@ void loop()
 {
 	checkforNewData();
 	refreshGrid();
+	//testGridRGB();
 }
 
 void emptyGrid()
@@ -204,5 +205,63 @@ void updateGrid(uint8_t message[])
 	case(Empty):
 		grid[message[0]][message[1]] = Empty;
 		break;
+	}
+}
+
+void testGridRGB()
+{
+	unsigned long time;
+	time = millis();
+	testGridR();
+	while(millis() <= (time + 1000))
+	{
+		refreshGrid();
+	}
+
+	time = millis();
+	testGridG();
+	while (millis() <= (time + 1000))
+	{
+		refreshGrid();
+	}
+
+	time = millis();
+	testGridB();
+	while (millis() <= (time + 1000))
+	{
+		refreshGrid();
+	}
+}
+
+void testGridR()
+{
+	for (uint8_t i = 0; i < 10; i++)
+	{
+		for (uint8_t j = 0; j < 10; j++)
+		{
+			grid[i][j] = Hit;
+		}
+	}
+}
+
+void testGridG()
+{
+	for (uint8_t i = 0; i < 10; i++)
+	{
+		for (uint8_t j = 0; j < 10; j++)
+		{
+			grid[i][j] = Occupied;
+		}
+	}
+}
+
+void testGridB()
+{
+	for (uint8_t i = 0; i < 10; i++)
+	{
+		for (uint8_t j = 0; j < 10; j++)
+		{
+			grid[i][j] = Miss;
+		}
 	}
 }
