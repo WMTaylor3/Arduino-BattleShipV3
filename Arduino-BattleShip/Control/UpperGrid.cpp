@@ -46,7 +46,7 @@ void UpperGrid::displayGhostMark(singleLocation strikePosition)
 //Clears the temporary mark of the strikePosition from the LED matrix.
 void UpperGrid::removeGhostMark(singleLocation strikePosition)
 {
-	transmitToMatrix(grid[strikePosition.x][strikePosition.y], strikePosition);
+	transmitToMatrix(grid[strikePosition.x-1][strikePosition.y-1], strikePosition);
 	delay(15);
 }
 
