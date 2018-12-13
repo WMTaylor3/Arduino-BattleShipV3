@@ -167,6 +167,17 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 	}
 }
 
+void InchDisplay::drawTargetPosition(singleLocation position)
+{
+	display.setCursor(52, 39);
+	display.write(position.x + 64);
+	display.setTextColor(1);
+
+	display.setCursor(64, 39);
+	display.print(position.y + 0);
+	display.setTextColor(1);
+}
+
 void InchDisplay::initializeDisplay()
 {
 	display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -206,7 +217,7 @@ void InchDisplay::drawConnectionFailed()
 	prepareForDraw(2);
 	display.setCursor(22, 14);
 	display.print(F("SEEKING"));
-	display.setCursor(24, 39);
+	display.setCursor(28, 39);
 	display.print(F("FAILED"));
 	display.display();
 }
@@ -276,51 +287,12 @@ void InchDisplay::drawPlaceDestroyer(singleLocation startPosition, singleLocatio
 	display.display();
 }
 
-void InchDisplay::drawEnterTarget(singleLocation targetPosition, positionType coordinate)
+void InchDisplay::drawEnterTarget(singleLocation targetPosition)
 {
 	prepareForDraw(2);
 	display.setCursor(28, 14);
 	display.print(F("TARGET"));
-
-	if (targetPosition.y >= 10)
-	{
-		if (coordinate == X)
-		{
-			display.fillRect(45, 38, 12, 16, 1);
-			display.setTextColor(0);
-		}
-		display.setCursor(46, 39);
-		display.write(targetPosition.x);
-		display.setTextColor(1);
-
-		if (coordinate == Y)
-		{
-			display.fillRect(57, 38, 24, 16, 1);
-			display.setTextColor(0);
-		}
-		display.setCursor(58, 39);
-		display.print(targetPosition.y + 0);
-	}
-	else
-	{
-		if (coordinate == X)
-		{
-			display.fillRect(51, 38, 12, 16, 1);
-			display.setTextColor(0);
-		}
-		display.setCursor(52, 39);
-		display.write(targetPosition.x);
-		display.setTextColor(1);
-
-		if (coordinate == Y)
-		{
-			display.fillRect(63, 38, 12, 16, 1);
-			display.setTextColor(0);
-		}
-		display.setCursor(64, 39);
-		display.print(targetPosition.y + 0);
-	}
-
+	drawTargetPosition(targetPosition);
 	display.display();
 }
 

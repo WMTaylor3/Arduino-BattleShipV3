@@ -3,22 +3,17 @@
 *
 *	Source file for representation of the lower game grid.
 *	Note: This only includes the vitual representation of the grid and the functions needed to maintain it.
-*		  All methods related to drawing on the LED grid can be found in MegaUpperGrid.ino.
+*		  All methods related to drawing on the LED grid can be found in Grid.ino.
 *		  All functions related to the logical running of the game can be found in GameLogic.cpp and GameLogic.h
 *
 *	By William Taylor https://github.com/WMTaylor3
 */
-#include <MemoryFree.h>
-
 #include "LowerGrid.h"
 #include "ButtonInterface.h"
 
 //Constructor. Creates a ship of each type and sets all grid references to empty.
 LowerGrid::LowerGrid() : ship{ Carrier, Battleship, Cruiser, Submarine, Destroyer }
 {
-	Serial.print(F("LowerGrid.cpp: Beginning Construction of LowerGrid. FreeMemory = "));
-	Serial.println(freeMemory());
-	delay(300);
 	for (uint8_t i = 0; i < 10; i++)	//For each row in the upper grid...
 	{
 		for (uint8_t j = 0; j < 10; j++)	//For each column in that row...
@@ -28,9 +23,7 @@ LowerGrid::LowerGrid() : ship{ Carrier, Battleship, Cruiser, Submarine, Destroye
 	}
 
 	display = InchDisplay::getInstance();
-	Serial.print(F("LowerGrid.cpp: Completed Construction of LowerGrid. FreeMemory = "));
-	Serial.println(freeMemory());
-	delay(300);
+	buttons = ButtonInterface::getInstance();
 }
 
 //Destructor
@@ -78,8 +71,6 @@ void LowerGrid::initializeShipLocations()
 buttonPress LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 {
 	Serial.println("Placing Ship");
-	InchDisplay* display = InchDisplay::getInstance();
-	ButtonInterface* buttons = ButtonInterface::getInstance();
 	buttonPress previousState = NoButton;
 	buttonPress selectedButton;
 	displayShipGhostOutline(currentShip);
@@ -199,7 +190,7 @@ void LowerGrid::recordStateToLocalGrid(gridReferenceState state, singleLocation 
 	transmitToMatrix(state, gridPosition);
 }
 
-//Adds a temporary ship to the LED matrix suring the ship placement routine, not stored to the local grid.
+//Adds a temporary ship to the LED matrix during the ship placement routine, not stored to the local grid.
 void LowerGrid::displayShipGhostOutline(Ship ship)
 {
 	for (uint8_t section = 0; section < ship.getShipLength(); section++)

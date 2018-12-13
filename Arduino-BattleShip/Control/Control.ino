@@ -4,17 +4,13 @@
  Author:	William Taylor
 */
 
+#include "UpperGrid.h"
+#include "LowerGrid.h"
 #include "BluetoothModule.h"
+#include "ButtonInterface.h"
 #include "Ship.h"
-#include "LowerGrid.h"
 #include "InchDisplay.h"
 #include "GameLogic.h"
-#include "ButtonInterface.h"
-#include "ButtonInterface.h"
-#include "InchDisplay.h"
-#include "LowerGrid.h"
-#include "GameLogic.h"
-#include "Ship.h"
 #include <Adafruit_SSD1306.h>
 #include <gfxfont.h>
 #include <Adafruit_SPITFT_Macros.h>
@@ -48,7 +44,7 @@ void setup()
 	//Build button interface instance. Singleton object can be accessed throughout the project.
 	buttons = ButtonInterface::getInstance();
 	
-	//Build bluetooth interface instance. Singleton object can be accessed throughout the project.
+	/*Build bluetooth interface instance. Singleton object can be accessed throughout the project.
 	bluetooth = BluetoothModule::getInstance();
 	display->drawConnectionScreen();
 	if (!bluetooth->establishConnection(ROLE))
@@ -58,7 +54,7 @@ void setup()
 		exit(404);
 	}
 	display->drawConnectionSucessful();
-
+	*/
 	//Build game logic instance. Singleton object can be accessed throughout the project.
 	game = GameLogic::getInstance();
 	game->initializeGame();

@@ -28,6 +28,7 @@ private:
 	void clearDisplay();
 	void refreshDisplay();
 	void drawStartAndEnd(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
+	void drawTargetPosition(singleLocation position);
 public:
 	~InchDisplay();
 	static InchDisplay* getInstance();
@@ -42,7 +43,7 @@ public:
 	void drawPlaceCruiser(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
 	void drawPlaceSubmarine(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
 	void drawPlaceDestroyer(singleLocation startPosition, singleLocation endPosition, positionType coordinate);
-	void drawEnterTarget(singleLocation startPosition, positionType coordinate);
+	void drawEnterTarget(singleLocation startPosition);
 	void drawYourTurn();
 	void drawTheirTurn();
 	void drawFire();

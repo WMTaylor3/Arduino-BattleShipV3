@@ -18,17 +18,24 @@
 
 #include <BattleShipCommonTypes.h>
 #include "LowerGrid.h"
+#include "UpperGrid.h"
 
 class GameLogic
 {
 private:
 	GameLogic();
 	static GameLogic* instance;
+	InchDisplay* display;
+	ButtonInterface* buttons;
+	BluetoothModule* bluetooth;
 	LowerGrid lowerGrid;
+	UpperGrid upperGrid;
 public:
 	~GameLogic();
 	static GameLogic* getInstance();
 	void initializeGame();
+	void homeTurn();
+	void awayTurn();
 };
 
 #endif
