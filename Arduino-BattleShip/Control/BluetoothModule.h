@@ -26,6 +26,10 @@ public:
 	~BluetoothModule();
 	static BluetoothModule* getInstance();
 	bool establishConnection(boardRole role);
+	bool transmitStrike(singleLocation strikePosition);
+	singleLocation receiveStrike();
+	bool transmitResponse(gridReferenceState response);
+	gridReferenceState receiveResponse();
 };
 
 #endif
