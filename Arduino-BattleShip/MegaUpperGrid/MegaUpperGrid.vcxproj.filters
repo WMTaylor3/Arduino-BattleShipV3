@@ -15,9 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MegaUpperGrid.ino" />
+    <None Include="UpperGrid.ino" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="__vm\.UpperGrid.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="__vm\.MegaUpperGrid.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
