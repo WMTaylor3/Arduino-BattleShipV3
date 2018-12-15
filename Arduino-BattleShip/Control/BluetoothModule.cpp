@@ -120,7 +120,7 @@ bool BluetoothModule::transmitStrike(singleLocation strikePosition)
 	//Make ten attempts to transmit.
 	while (transmitAttempt <= 10)
 	{
-		if (millis() >= timeOfLastAttempt + 3000)	//Every three seconds, perform a transmit attempt.
+		if (millis() >= timeOfLastAttempt + 2000)	//Every two seconds, perform a transmit attempt.
 		{
 			transmitAttempt++;
 			timeOfLastAttempt = millis();
@@ -159,14 +159,12 @@ bool BluetoothModule::transmitStrike(singleLocation strikePosition)
 singleLocation BluetoothModule::receiveStrike()
 {
 	uint8_t message[2];
-	uint8_t receiveAttempt = 0;
 	unsigned long timeOfLastCheck = millis();
 
-	while (receiveAttempt <= 30)
+	while (true)
 	{
 		if (millis() >= timeOfLastCheck + 1000)	//Every second, check for an incoming strike.
 		{
-			receiveAttempt++;
 			timeOfLastCheck = millis();
 
 			//If the whole message has been recieved.
@@ -206,7 +204,7 @@ bool BluetoothModule::transmitResponse(gridReferenceState response)
 	//Make ten attempts to transmit.
 	while (transmitAttempt <= 10)
 	{
-		if (millis() >= timeOfLastAttempt + 3000)	//Every three seconds, perform a transmit attempt.
+		if (millis() >= timeOfLastAttempt + 2000)	//Every two seconds, perform a transmit attempt.
 		{
 			transmitAttempt++;
 			timeOfLastAttempt = millis();
@@ -245,7 +243,7 @@ gridReferenceState BluetoothModule::receiveResponse()
 
 	while (receiveAttempt <= 30)
 	{
-		if (millis() >= timeOfLastCheck + 1000)	//Every second, check for an incoming strike.
+		if (millis() >= timeOfLastCheck + 1000)	//Every second, check for an incoming strike response.
 		{
 			receiveAttempt++;
 			timeOfLastCheck = millis();

@@ -328,9 +328,6 @@ void InchDisplay::drawFire()
 		display.clearDisplay();
 		delay(200);
 		display.display();
-		delay(200);
-		display.clearDisplay();
-		delay(200);
 	}
 }
 
