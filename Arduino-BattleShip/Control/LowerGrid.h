@@ -36,7 +36,6 @@ private:
 	bool checkSpaceIsUnoccupied(Ship currentShip);
 	bool checkGridReferenceIsUnoccupied(Ship latestShipPlaced, singleLocation position);
 	void pullShipLocationsIntoLowerGrid(Ship latestShipPlaced);
-	void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 public:
 	LowerGrid();
 	~LowerGrid();
@@ -45,6 +44,7 @@ public:
 	void removeShipGhostOutline(Ship ship);
 	bool transmitToMatrix(gridReferenceState state, singleLocation gridPosition);
 	gridReferenceState checkIncomingStrike(singleLocation strikePosition);
+	void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 };
 
 #endif

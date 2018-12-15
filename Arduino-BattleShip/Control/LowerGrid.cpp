@@ -283,7 +283,5 @@ gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
 		result = Miss;
 	}
 
-	recordStateToLocalGrid(result, strikePosition);
-
 	return result;
 }

@@ -16,7 +16,6 @@ GameLogic::GameLogic()
 	display = InchDisplay::getInstance();
 	buttons = ButtonInterface::getInstance();
 	bluetooth = BluetoothModule::getInstance();
-	Serial.begin(9600);
 }
 
 //Destructor.
@@ -38,15 +37,22 @@ GameLogic* GameLogic::getInstance()
 void GameLogic::initializeGame()
 {
 	lowerGrid.initializeShipLocations();
-	Serial.print("Check0");
-	homeTurn();
 }
 
 void GameLogic::homeTurn()
 {
 	display->drawYourTurn();
-	delay(700);
+	delay(750);
+	singleLocation strikePosition = targetOpponent();
+	bluetooth->transmitStrike(strikePosition);
+	display->drawFire();
+	gridReferenceState strikeResponse = bluetooth->receiveResponse();
+	updateDisplayWithStrikeResponse(strikeResponse);
+	upperGrid.recordStateToLocalGrid(strikeResponse, strikePosition);
+}
 
+singleLocation GameLogic::targetOpponent()
+{
 	//Configure an initial strike position.
 	singleLocation strikePosition;
 	buttonPress selectedButton;
@@ -57,9 +63,9 @@ void GameLogic::homeTurn()
 
 	upperGrid.displayGhostMark(strikePosition);
 
+	//Target opponent.
 	while (true)
 	{
-		Serial.println("Check1");
 		display->drawEnterTarget(strikePosition);
 
 		selectedButton = buttons->getButtonPress(previousState);
@@ -69,17 +75,14 @@ void GameLogic::homeTurn()
 			upperGrid.removeGhostMark(strikePosition);
 			if (selectedButton == CenterPushed)
 			{
-				Serial.println("Center");
-				bluetooth->transmitStrike(strikePosition);
+				return strikePosition;
 			}
 			else if (selectedButton == LeftPushed)
 			{
-				Serial.println("Left");
 				strikePosition.x = ((strikePosition.x < 10) ? strikePosition.x + 1 : 1);
 			}
 			else if (selectedButton == RightPushed)
 			{
-				Serial.println("Right");
 				strikePosition.y = ((strikePosition.y < 10) ? strikePosition.y + 1 : 1);
 			}
 			upperGrid.displayGhostMark(strikePosition);
@@ -91,5 +94,28 @@ void GameLogic::homeTurn()
 
 void GameLogic::awayTurn()
 {
+	display->drawTheirTurn();
+	delay(750);
+	singleLocation strikePosition = bluetooth->receiveStrike();
+	gridReferenceState strikeResponse = lowerGrid.checkIncomingStrike(strikePosition);
+	bluetooth->transmitResponse(strikeResponse);
+	updateDisplayWithStrikeResponse(strikeResponse);
+	lowerGrid.recordStateToLocalGrid(strikeResponse, strikePosition);
 
+}
+
+void GameLogic::updateDisplayWithStrikeResponse(gridReferenceState response)
+{
+	switch (response)
+	{
+	case(Hit):
+		display->drawHit;
+		break;
+	case(HitAndSunk):
+		display->drawHitAndSunk;
+		break;
+	case(Miss):
+		display->drawHit;
+		break;
+	}
 }

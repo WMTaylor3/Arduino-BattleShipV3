@@ -35,7 +35,9 @@ public:
 	static GameLogic* getInstance();
 	void initializeGame();
 	void homeTurn();
+	singleLocation targetOpponent();
 	void awayTurn();
+	void updateDisplayWithStrikeResponse(gridReferenceState response);
 };
 
 #endif

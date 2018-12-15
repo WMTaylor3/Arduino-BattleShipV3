@@ -29,12 +29,12 @@ class UpperGrid
 {
 private:
 	gridReferenceState grid[10][10];
-	void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 public:
 	UpperGrid();
 	~UpperGrid();
 	void displayGhostMark(singleLocation strikePosition);
 	void removeGhostMark(singleLocation strikePosition);
+	void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
 	bool transmitToMatrix(gridReferenceState state, singleLocation gridPosition);
 };
 

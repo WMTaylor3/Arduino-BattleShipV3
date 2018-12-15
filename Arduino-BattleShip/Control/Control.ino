@@ -23,6 +23,8 @@
 //This should be changed between uploads to each board.
 const boardRole ROLE = Slave;
 
+uint16_t turnCount = 0;
+
 InchDisplay* display;
 ButtonInterface* buttons;
 BluetoothModule* bluetooth;
@@ -44,7 +46,7 @@ void setup()
 	//Build button interface instance. Singleton object can be accessed throughout the project.
 	buttons = ButtonInterface::getInstance();
 	
-	/*Build bluetooth interface instance. Singleton object can be accessed throughout the project.
+	//Build bluetooth interface instance. Singleton object can be accessed throughout the project.
 	bluetooth = BluetoothModule::getInstance();
 	display->drawConnectionScreen();
 	if (!bluetooth->establishConnection(ROLE))
@@ -54,7 +56,7 @@ void setup()
 		exit(404);
 	}
 	display->drawConnectionSucessful();
-	*/
+	
 	//Build game logic instance. Singleton object can be accessed throughout the project.
 	game = GameLogic::getInstance();
 	game->initializeGame();
@@ -63,5 +65,13 @@ void setup()
 //The loop function runs over and over again until power down or reset
 void loop()
 {
-
+	if (turnCount % 2 == ROLE % 2)
+	{
+		game->homeTurn();
+	}
+	else
+	{
+		game->awayTurn();
+	}
+	//if(game->checkStatus() == /*Something to indicate winnder or loser*/);
 }
