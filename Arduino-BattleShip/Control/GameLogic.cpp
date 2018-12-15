@@ -119,7 +119,7 @@ void GameLogic::updateDisplayWithStrikeResponse(gridReferenceState response)
 		display->drawHitAndSunk();
 		break;
 	case(Miss):
-		display->drawHit();
+		display->drawMiss();
 		break;
 	}
 	delay(1000);
