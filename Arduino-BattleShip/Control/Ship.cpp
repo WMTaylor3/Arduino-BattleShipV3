@@ -15,9 +15,6 @@
 //Constructor. Does not include ship locations, these are handled later after the user has performed input.
 Ship::Ship(shipType typeOfShip)
 {
-	Serial.print(F("Ship.cpp: Beginning of Ship Constructor. FreeMemory = "));
-	Serial.println(freeMemory());
-	delay(300);
 	name = typeOfShip;	//Set ship type and therefore its name.
 
 	switch (typeOfShip)	//Determine the length and therefore the maximum HP of the ship based on its type.
@@ -41,10 +38,10 @@ Ship::Ship(shipType typeOfShip)
 
 	remainingSections = maxSections;	//Start Ship at full HP.
 
-	position.startPosition.x = 1;
-	position.startPosition.y = 1;
+	position.startPosition.x = 0;
+	position.startPosition.y = 0;
 	position.endPosition.x = position.startPosition.x + (getShipLength() - 1);
-	position.endPosition.y = 1;
+	position.endPosition.y = 0;
 }
 
 //Destructor
@@ -77,7 +74,7 @@ bool Ship::isShipVertical()
 
 void Ship::incrementXPosition()
 {
-	if ((position.startPosition.x + 1 >= 1) && (position.endPosition.x + 1 <= 10))
+	if ((position.startPosition.x + 1 >= 0) && (position.endPosition.x + 1 <= 9))
 	{
 		position.startPosition.x++;
 		position.endPosition.x++;
@@ -86,7 +83,7 @@ void Ship::incrementXPosition()
 
 void Ship::decrementXPosition()
 {
-	if ((position.startPosition.x - 1 >= 1) && (position.endPosition.x - 1 <= 10))
+	if ((position.startPosition.x - 1 >= 0) && (position.endPosition.x - 1 <= 9))
 	{
 		position.startPosition.x--;
 		position.endPosition.x--;
@@ -95,7 +92,7 @@ void Ship::decrementXPosition()
 
 void Ship::incrementYPosition()
 {
-	if ((position.startPosition.y + 1 >= 1) && (position.endPosition.y + 1 <= 10))
+	if ((position.startPosition.y + 1 >= 0) && (position.endPosition.y + 1 <= 9))
 	{
 		position.startPosition.y++;
 		position.endPosition.y++;
@@ -104,7 +101,7 @@ void Ship::incrementYPosition()
 
 void Ship::decrementYPosition()
 {
-	if ((position.startPosition.y - 1 >= 1) && (position.endPosition.y - 1 <= 10))
+	if ((position.startPosition.y - 1 >= 0) && (position.endPosition.y - 1 <= 9))
 	{
 		position.startPosition.y--;
 		position.endPosition.y--;
@@ -116,7 +113,7 @@ bool Ship::attemptRotation()
 	if (vertical) //Ship is vertical and should be rotated horizontally.
 	{
 		uint8_t length = position.endPosition.y - position.startPosition.y;
-		if (position.endPosition.x + length <= 10)
+		if (position.endPosition.x + length <= 9)
 		{
 			position.endPosition.x = position.startPosition.x + length;
 			position.endPosition.y = position.startPosition.y;
@@ -127,7 +124,7 @@ bool Ship::attemptRotation()
 	else //Ship is horizontal and should be rotated vertically.
 	{
 		uint8_t length = position.endPosition.x - position.startPosition.x;
-		if (position.endPosition.y + length <= 10)
+		if (position.endPosition.y + length <= 9)
 		{
 			position.endPosition.y = position.startPosition.y + length;
 			position.endPosition.x = position.startPosition.x;

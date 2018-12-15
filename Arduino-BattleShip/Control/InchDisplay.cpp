@@ -53,7 +53,7 @@ void InchDisplay::refreshDisplay()
 
 void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation endPosition, positionType coordinate)
 {
-	if (startPosition.y == 10 && endPosition.y == 10)
+	if (startPosition.y == 9 && endPosition.y == 9)
 	{
 		if (coordinate == X)
 		{
@@ -61,7 +61,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(10, 39);
-		display.write(startPosition.x + 64);
+		display.write(startPosition.x + 65);
 		display.setTextColor(1);
 
 		if (coordinate == Y)
@@ -70,18 +70,18 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(22, 39);
-		display.print(startPosition.y + 0);
+		display.print(startPosition.y + 1);
 		display.setTextColor(1);
 
 		display.setCursor(40, 39);
 		display.print(F(" TO "));
 
 		display.setCursor(82, 39);
-		display.write(endPosition.x + 64);
+		display.write(endPosition.x + 65);
 		display.setCursor(94, 39);
-		display.print(endPosition.y + 0);
+		display.print(endPosition.y + 1);
 	}
-	else if (startPosition.y >= 10 && endPosition.y < 10)
+	else if (startPosition.y >= 9 && endPosition.y < 9)
 	{
 		if (coordinate == X)
 		{
@@ -89,7 +89,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(16, 39);
-		display.write(startPosition.x + 64);
+		display.write(startPosition.x + 65);
 		display.setTextColor(1);
 
 		if (coordinate == Y)
@@ -98,18 +98,18 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(28, 39);
-		display.print(startPosition.y + 0);
+		display.print(startPosition.y + 1);
 		display.setTextColor(1);
 
 		display.setCursor(46, 39);
 		display.print(F(" TO "));
 
 		display.setCursor(88, 39);
-		display.write(endPosition.x + 64);
+		display.write(endPosition.x + 65);
 		display.setCursor(100, 39);
-		display.print(endPosition.y + 0);
+		display.print(endPosition.y + 1);
 	}
-	else if (startPosition.y < 10 && endPosition.y >= 10)
+	else if (startPosition.y < 9 && endPosition.y >= 9)
 	{
 		if (coordinate == X)
 		{
@@ -117,7 +117,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(16, 39);
-		display.write(startPosition.x + 64);
+		display.write(startPosition.x + 65);
 		display.setTextColor(1);
 
 		if (coordinate == Y)
@@ -126,16 +126,16 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(28, 39);
-		display.print(startPosition.y + 0);
+		display.print(startPosition.y + 1);
 		display.setTextColor(1);
 
 		display.setCursor(34, 39);
 		display.print(F(" TO "));
 
 		display.setCursor(76, 39);
-		display.write(endPosition.x + 64);
+		display.write(endPosition.x + 65);
 		display.setCursor(88, 39);
-		display.print(endPosition.y + 0);
+		display.print(endPosition.y + 1);
 	}
 	else
 	{
@@ -145,7 +145,7 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(22, 39);
-		display.write(startPosition.x + 64);
+		display.write(startPosition.x + 65);
 		display.setTextColor(1);
 
 		if (coordinate == Y)
@@ -154,27 +154,27 @@ void InchDisplay::drawStartAndEnd(singleLocation startPosition, singleLocation e
 			display.setTextColor(0);
 		}
 		display.setCursor(34, 39);
-		display.print(startPosition.y + 0);
+		display.print(startPosition.y + 1);
 		display.setTextColor(1);
 
 		display.setCursor(40, 39);
 		display.print(F(" TO "));
 
 		display.setCursor(82, 39);
-		display.write(endPosition.x + 64);
+		display.write(endPosition.x + 65);
 		display.setCursor(94, 39);
-		display.print(endPosition.y + 0);
+		display.print(endPosition.y + 1);
 	}
 }
 
 void InchDisplay::drawTargetPosition(singleLocation position)
 {
 	display.setCursor(52, 39);
-	display.write(position.x + 64);
+	display.write(position.x + 65);
 	display.setTextColor(1);
 
 	display.setCursor(64, 39);
-	display.print(position.y + 0);
+	display.print(position.y + 1);
 	display.setTextColor(1);
 }
 

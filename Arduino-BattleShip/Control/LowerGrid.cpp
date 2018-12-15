@@ -70,7 +70,6 @@ void LowerGrid::initializeShipLocations()
 //Communicates with the user to set the location and rotation of a specific ship on the board.
 buttonPress LowerGrid::setShipLocation(Ship& currentShip, positionType coordinate)
 {
-	Serial.println("Placing Ship");
 	buttonPress previousState = NoButton;
 	buttonPress selectedButton;
 	displayShipGhostOutline(currentShip);
@@ -182,14 +181,6 @@ void LowerGrid::pullShipLocationsIntoLowerGrid(Ship currentShip)
 	}
 }
 
-//Records a grid state at a location on the local grid.
-void LowerGrid::recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition)
-{
-	//Minus one to translate between the 1-10 notation of the players view of the grid and the 0-9 representation of the array.
-	grid[gridPosition.x - 1][gridPosition.y - 1] = state;
-	transmitToMatrix(state, gridPosition);
-}
-
 //Adds a temporary ship to the LED matrix during the ship placement routine, not stored to the local grid.
 void LowerGrid::displayShipGhostOutline(Ship ship)
 {
@@ -226,36 +217,6 @@ void LowerGrid::removeShipGhostOutline(Ship ship)
 	}
 }
 
-//Method to transmit data to the grid Mega.
-bool LowerGrid::transmitToMatrix(gridReferenceState state, singleLocation gridPosition)
-{
-	uint8_t message[3];
-
-	//Construct message.
-	message[0] = gridPosition.x - 1;
-	message[1] = gridPosition.y - 1;
-	message[2] = state;
-
-	//Transmit to the grid.
-	Serial1.write(message[0]);
-	Serial1.write(message[1]);
-	Serial1.write(message[2]);
-
-	//Attempt to retrieve and validate confirmation message.
-	for (uint8_t readAttempt = 0; readAttempt < 10; readAttempt++)
-	{
-		if (Serial1.read() == '-')
-		{
-			return true;
-		}
-		else
-		{
-			delay(1);
-		}
-	}
-	return false;
-}
-
 //Checks a strike coming in from the other game board.
 gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
 {
@@ -284,4 +245,41 @@ gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
 	}
 
 	return result;
+}
+
+//Records a grid state at a location on the local grid.
+void LowerGrid::recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition)
+{
+	grid[gridPosition.x][gridPosition.y] = state;
+	transmitToMatrix(state, gridPosition);
+}
+
+//Method to transmit data to the grid Mega.
+bool LowerGrid::transmitToMatrix(gridReferenceState state, singleLocation gridPosition)
+{
+	uint8_t message[3];
+
+	//Construct message.
+	message[0] = gridPosition.x;
+	message[1] = gridPosition.y;
+	message[2] = state;
+
+	//Transmit to the grid.
+	Serial1.write(message[0]);
+	Serial1.write(message[1]);
+	Serial1.write(message[2]);
+
+	//Attempt to retrieve and validate confirmation message.
+	for (uint8_t readAttempt = 0; readAttempt < 10; readAttempt++)
+	{
+		if (Serial1.read() == '-')
+		{
+			return true;
+		}
+		else
+		{
+			delay(1);
+		}
+	}
+	return false;
 }

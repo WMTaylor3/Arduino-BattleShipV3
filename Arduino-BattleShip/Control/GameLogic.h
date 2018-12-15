@@ -30,14 +30,17 @@ private:
 	BluetoothModule* bluetooth;
 	LowerGrid lowerGrid;
 	UpperGrid upperGrid;
+	uint8_t remainingHomeShips;
+	uint8_t remainingAwayShips;
+	singleLocation targetOpponent();
+	void updateDisplayWithStrikeResponse(gridReferenceState response);
 public:
 	~GameLogic();
 	static GameLogic* getInstance();
 	void initializeGame();
 	void homeTurn();
-	singleLocation targetOpponent();
 	void awayTurn();
-	void updateDisplayWithStrikeResponse(gridReferenceState response);
+	winner endGameCheck();
 };
 
 #endif

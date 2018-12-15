@@ -16,6 +16,8 @@ GameLogic::GameLogic()
 	display = InchDisplay::getInstance();
 	buttons = ButtonInterface::getInstance();
 	bluetooth = BluetoothModule::getInstance();
+	remainingHomeShips = 5;
+	remainingAwayShips = 5;
 }
 
 //Destructor.
@@ -44,11 +46,12 @@ void GameLogic::homeTurn()
 	display->drawYourTurn();
 	delay(750);
 	singleLocation strikePosition = targetOpponent();
-	bluetooth->transmitStrike(strikePosition);
 	display->drawFire();
+	bluetooth->transmitStrike(strikePosition);
 	gridReferenceState strikeResponse = bluetooth->receiveResponse();
 	updateDisplayWithStrikeResponse(strikeResponse);
 	upperGrid.recordStateToLocalGrid(strikeResponse, strikePosition);
+	if (strikeResponse == HitAndSunk) { remainingAwayShips--; }
 }
 
 singleLocation GameLogic::targetOpponent()
@@ -101,7 +104,7 @@ void GameLogic::awayTurn()
 	bluetooth->transmitResponse(strikeResponse);
 	updateDisplayWithStrikeResponse(strikeResponse);
 	lowerGrid.recordStateToLocalGrid(strikeResponse, strikePosition);
-
+	if (strikeResponse == HitAndSunk) { remainingHomeShips--; }
 }
 
 void GameLogic::updateDisplayWithStrikeResponse(gridReferenceState response)
@@ -109,13 +112,32 @@ void GameLogic::updateDisplayWithStrikeResponse(gridReferenceState response)
 	switch (response)
 	{
 	case(Hit):
-		display->drawHit;
+		display->drawHit();
 		break;
 	case(HitAndSunk):
-		display->drawHitAndSunk;
+		display->drawHitAndSunk();
 		break;
 	case(Miss):
-		display->drawHit;
+		display->drawHit();
 		break;
+	}
+}
+
+winner GameLogic::endGameCheck()
+{
+	if ((remainingHomeShips == 0) || (remainingAwayShips == 0))
+	{
+		if (remainingHomeShips == 0)
+		{
+			return Loser;
+		}
+		else if (remainingAwayShips == 0)
+		{
+			return Winner;
+		}
+	}
+	else
+	{
+		return GameInProgress;
 	}
 }

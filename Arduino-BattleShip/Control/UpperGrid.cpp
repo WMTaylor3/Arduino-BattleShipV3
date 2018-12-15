@@ -31,8 +31,7 @@ UpperGrid::~UpperGrid()
 //Records a grid state at a location on the local grid.
 void UpperGrid::recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition)
 {
-	//Minus one to translate between the 1-10 notation of the players view of the grid and the 0-9 representation of the array.
-	grid[gridPosition.x - 1][gridPosition.y - 1] = state;
+	grid[gridPosition.x][gridPosition.y] = state;
 	transmitToMatrix(state, gridPosition);
 }
 
@@ -46,7 +45,7 @@ void UpperGrid::displayGhostMark(singleLocation strikePosition)
 //Clears the temporary mark of the strikePosition from the LED matrix.
 void UpperGrid::removeGhostMark(singleLocation strikePosition)
 {
-	transmitToMatrix(grid[strikePosition.x-1][strikePosition.y-1], strikePosition);
+	transmitToMatrix(grid[strikePosition.x][strikePosition.y], strikePosition);
 	delay(15);
 }
 
@@ -56,8 +55,8 @@ bool UpperGrid::transmitToMatrix(gridReferenceState state, singleLocation gridPo
 	uint8_t message[3];
 
 	//Construct message.
-	message[0] = gridPosition.x - 1;
-	message[1] = gridPosition.y - 1;
+	message[0] = gridPosition.x;
+	message[1] = gridPosition.y;
 	message[2] = state;
 
 	//Transmit to the grid.

@@ -21,7 +21,7 @@
 
 //A constant char used to define the role of the board.
 //This should be changed between uploads to each board.
-const boardRole ROLE = Slave;
+const boardRole ROLE = Master;
 
 uint16_t turnCount = 0;
 
@@ -73,5 +73,21 @@ void loop()
 	{
 		game->awayTurn();
 	}
-	//if(game->checkStatus() == /*Something to indicate winnder or loser*/);
+	
+	winner gameStatus = game->endGameCheck();
+
+	if (gameStatus == Winner)
+	{
+		display->drawYouWin();
+		exit(10);
+	}
+	else if(gameStatus == Loser)
+	{
+		display->drawYouLose();
+		exit(20);
+	}
+	else
+	{
+		//Continue game.
+	}
 }
