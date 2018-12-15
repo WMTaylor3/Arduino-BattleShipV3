@@ -326,8 +326,22 @@ void InchDisplay::drawFire()
 		display.display();
 		delay(200);
 		display.clearDisplay();
+		delay(200);
 		display.display();
 		delay(200);
+		display.clearDisplay();
+		delay(200);
+	}
+}
+
+void InchDisplay::drawSending()
+{
+	for (uint8_t i = 0; i < 5; i++)
+	{
+		prepareForDraw(2);
+		display.setCursor(4, 24);
+		display.print(F("SENDING..."));
+		display.display();
 	}
 }
 

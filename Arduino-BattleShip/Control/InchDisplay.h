@@ -47,6 +47,7 @@ public:
 	void drawYourTurn();
 	void drawTheirTurn();
 	void drawFire();
+	void drawSending();
 	void drawHit();
 	void drawHitAndSunk();
 	void drawMiss();

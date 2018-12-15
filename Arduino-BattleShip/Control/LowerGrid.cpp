@@ -220,31 +220,22 @@ void LowerGrid::removeShipGhostOutline(Ship ship)
 //Checks a strike coming in from the other game board.
 gridReferenceState LowerGrid::checkIncomingStrike(singleLocation strikePosition)
 {
-	gridReferenceState result;
-	bool missed = true;
-
 	for (Ship s : ship)
 	{
 		if (s.isShipLocatedAtPosition(strikePosition))
 		{
-			missed = false;
 			if (s.isShipSunk())
 			{
-				result = HitAndSunk;
+				return HitAndSunk;
 			}
 			else
 			{
-				result = Hit;
+				return Hit;
 			}
 		}
 	}
 
-	if (missed)
-	{
-		result = Miss;
-	}
-
-	return result;
+	return Miss;
 }
 
 //Records a grid state at a location on the local grid.
