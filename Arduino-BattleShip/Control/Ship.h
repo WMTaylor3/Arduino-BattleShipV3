@@ -39,6 +39,7 @@ public:
 	bool attemptRotation();
 	singleLocation getShipSectionGridReference(uint8_t sectionNumber);
 	bool isShipLocatedAtPosition(singleLocation strikePosition);
+	void dropHP();
 	bool isShipSunk();
 };
 

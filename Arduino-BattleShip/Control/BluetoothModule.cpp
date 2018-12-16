@@ -13,7 +13,7 @@ BluetoothModule* BluetoothModule::instance = 0;
 //Constructor
 BluetoothModule::BluetoothModule()
 {
-
+	display = InchDisplay::getInstance();
 }
 
 //Destructor
@@ -117,6 +117,8 @@ bool BluetoothModule::transmitStrike(singleLocation strikePosition)
 	uint8_t transmitAttempt = 0;
 	unsigned long timeOfLastAttempt = millis();
 
+	display->drawSending();
+
 	//Make ten attempts to transmit.
 	while (transmitAttempt <= 10)
 	{
@@ -126,8 +128,8 @@ bool BluetoothModule::transmitStrike(singleLocation strikePosition)
 			timeOfLastAttempt = millis();
 
 			//Construct message.
-			message[0] = strikePosition.x - 1;
-			message[1] = strikePosition.y - 1;
+			message[0] = strikePosition.x;
+			message[1] = strikePosition.y;
 
 			//Transmit to the other board.
 			Serial3.write(message[0]);
@@ -170,6 +172,7 @@ singleLocation BluetoothModule::receiveStrike()
 			//If the whole message has been recieved.
 			if (Serial3.available() >= 2)
 			{
+				display->drawReceiving();
 				//Read in the data to seperate chars.
 				for (uint8_t i = 0; i < 2; i++)
 				{

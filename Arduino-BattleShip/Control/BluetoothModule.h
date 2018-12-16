@@ -16,11 +16,13 @@
 #endif
 
 #include "BattleShipCommonTypes.h"
+#include "InchDisplay.h"
 
 class BluetoothModule
 {
 private:
 	BluetoothModule();
+	InchDisplay* display;
 	static BluetoothModule* instance;
 public:
 	~BluetoothModule();

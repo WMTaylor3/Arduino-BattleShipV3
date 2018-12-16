@@ -21,7 +21,7 @@
 
 //A constant char used to define the role of the board.
 //This should be changed between uploads to each board.
-const boardRole ROLE = Master;
+const boardRole ROLE = Slave;
 
 uint16_t turnCount = 1;
 

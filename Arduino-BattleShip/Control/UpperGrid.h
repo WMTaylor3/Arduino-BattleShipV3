@@ -35,6 +35,7 @@ public:
 	void displayGhostMark(singleLocation strikePosition);
 	void removeGhostMark(singleLocation strikePosition);
 	void recordStateToLocalGrid(gridReferenceState state, singleLocation gridPosition);
+	bool checkExistingStrike(singleLocation strikePosition);
 	bool transmitToMatrix(gridReferenceState state, singleLocation gridPosition);
 };
 

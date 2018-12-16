@@ -47,7 +47,6 @@ void GameLogic::homeTurn()
 	delay(750);
 	singleLocation strikePosition = targetOpponent();
 	display->drawFire();
-	display->drawSending();
 	bluetooth->transmitStrike(strikePosition);
 	gridReferenceState strikeResponse = bluetooth->receiveResponse();
 	updateDisplayWithStrikeResponse(strikeResponse);
@@ -79,7 +78,11 @@ singleLocation GameLogic::targetOpponent()
 			upperGrid.removeGhostMark(strikePosition);
 			if (selectedButton == CenterPushed)
 			{
-				return strikePosition;
+				//Ensure the user has not already targeted this location.
+				if (!upperGrid.checkExistingStrike(strikePosition))
+				{
+					return strikePosition;
+				}
 			}
 			else if (selectedButton == LeftPushed)
 			{
@@ -122,7 +125,7 @@ void GameLogic::updateDisplayWithStrikeResponse(gridReferenceState response)
 		display->drawMiss();
 		break;
 	}
-	delay(1000);
+	delay(2500);
 }
 
 winner GameLogic::endGameCheck()

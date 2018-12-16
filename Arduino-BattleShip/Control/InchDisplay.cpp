@@ -342,6 +342,17 @@ void InchDisplay::drawSending()
 	}
 }
 
+void InchDisplay::drawReceiving()
+{
+	for (uint8_t i = 0; i < 5; i++)
+	{
+		prepareForDraw(2);
+		display.setCursor(10, 24);
+		display.print(F("RECEIVING"));
+		display.display();
+	}
+}
+
 void InchDisplay::drawHit()
 {
 	prepareForDraw(4);

@@ -161,13 +161,17 @@ bool Ship::isShipLocatedAtPosition(singleLocation strikePosition)
 	if (((strikePosition.x >= position.startPosition.x) && (strikePosition.x <= position.endPosition.x) &&
 		(strikePosition.y >= position.startPosition.y) && (strikePosition.y <= position.endPosition.y)))
 	{
-		remainingSections--;
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+void Ship::dropHP()
+{
+	remainingSections--;
 }
 
 //Should be called by caller only when "isShipLocatedAtPosition" returns true, evaluates if every section of the ship has been hit.
