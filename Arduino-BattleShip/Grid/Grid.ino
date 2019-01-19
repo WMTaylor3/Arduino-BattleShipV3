@@ -26,6 +26,7 @@ void loop()
 {
 	checkforNewData();
 	refreshGrid();
+	//testGridRGB();
 }
 
 void emptyGrid()

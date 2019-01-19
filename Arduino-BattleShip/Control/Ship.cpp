@@ -158,15 +158,7 @@ singleLocation Ship::getShipSectionGridReference(uint8_t sectionNumber)
 //Based on the location provided as arguments, returns whether any part of the ship was located at the position, returns true if so, false if not.
 bool Ship::isShipLocatedAtPosition(singleLocation strikePosition)
 {
-	if (((strikePosition.x >= position.startPosition.x) && (strikePosition.x <= position.endPosition.x) &&
-		(strikePosition.y >= position.startPosition.y) && (strikePosition.y <= position.endPosition.y)))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (((strikePosition.x >= position.startPosition.x) && (strikePosition.x <= position.endPosition.x) && (strikePosition.y >= position.startPosition.y) && (strikePosition.y <= position.endPosition.y)));
 }
 
 void Ship::dropHP()
@@ -177,12 +169,5 @@ void Ship::dropHP()
 //Should be called by caller only when "isShipLocatedAtPosition" returns true, evaluates if every section of the ship has been hit.
 bool Ship::isShipSunk()
 {
-	if (remainingSections <= 0)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (remainingSections <= 0);
 }
