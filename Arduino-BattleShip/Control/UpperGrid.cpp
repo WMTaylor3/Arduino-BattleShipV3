@@ -38,14 +38,7 @@ void UpperGrid::recordStateToLocalGrid(gridReferenceState state, singleLocation 
 //Determines if the user has already targeted this location. Returns true if they have.
 bool UpperGrid::checkExistingStrike(singleLocation strikePosition)
 {
-	if (grid[strikePosition.x][strikePosition.y] != Empty)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return grid[strikePosition.x][strikePosition.y] != Empty;
 }
 
 //Adds a temporary mark to the LED matrix during the targeting process, not stored to the local grid.
